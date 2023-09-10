@@ -1,12 +1,13 @@
-import { type FC } from "react";
+import { type FC, type MouseEventHandler } from "react";
 
 type Props = {
   size?: "medium" | "small";
   color?: "primary" | "gray";
   text: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-const Button: FC<Props> = ({ size, color, text }) => {
+const Button: FC<Props> = ({ size, color, text, onClick }) => {
   let styleOfSize = "";
   switch (size) {
     case "medium":
@@ -33,6 +34,7 @@ const Button: FC<Props> = ({ size, color, text }) => {
 
   return (
     <button
+      onClick={onClick}
       className={`rounded-[4px] border text-center duration-100 ${styleOfSize} ${styleOfColor}`}
     >
       {text}
