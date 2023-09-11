@@ -20,7 +20,7 @@ const TextField: FC<Props> = ({ type, placeholder }) => {
         className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none focus:text-primary-dark focus:placeholder-transparent"
       />
       <span
-        className={`absolute left-[32px] top-[-5px] text-[10px] duration-100  peer-focus:text-primary-dark
+        className={`absolute left-[32px] top-[-10px] text-[10px] duration-100  peer-focus:text-primary-dark
         ${value.length > 0 ? "text-primary focus:text-primary-dark" : "text-transparent"}
         `}
       >
