@@ -1,14 +1,13 @@
 "use client";
 
-import { useState, type FC, type MouseEventHandler } from "react";
+import { useState, type FC } from "react";
 
 type Props = {
   type: "text" | "password";
   placeholder?: string;
-  onClick?: MouseEventHandler<HTMLInputElement>;
 };
 
-const TextField: FC<Props> = ({ type, placeholder, onClick }) => {
+const TextField: FC<Props> = ({ type, placeholder }) => {
   const [value, setValue] = useState("");
 
   return (
@@ -18,7 +17,6 @@ const TextField: FC<Props> = ({ type, placeholder, onClick }) => {
         value={value}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
-        onClick={onClick}
         className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none focus:text-primary-dark focus:placeholder-transparent"
       />
       <span
