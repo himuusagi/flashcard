@@ -9,9 +9,10 @@ import LinkedText from "../elements/LinkedText";
 
 type Props = {
   title: string;
+  href: string;
 };
 
-const Card: FC<Props> = ({ title }) => {
+const Card: FC<Props> = ({ title, href }) => {
   const router = useRouter();
   const [contentType, setContentType] = useState<"initial" | "edit">("initial");
 
@@ -32,7 +33,7 @@ const Card: FC<Props> = ({ title }) => {
       <h2 className="text-center text-xl text-primary">{title}</h2>
 
       <div className="mt-8 text-center">
-        <Button text="テストする" onClick={() => router.push("/")} />
+        <Button text="テストする" onClick={() => router.push(href)} />
       </div>
     </>
   );
