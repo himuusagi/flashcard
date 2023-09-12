@@ -5,9 +5,10 @@ type Props = {
   color?: "primary" | "gray";
   text: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  className?: string;
 };
 
-const Button: FC<Props> = ({ size, color, text, onClick }) => {
+const Button: FC<Props> = ({ size, color, text, onClick, className }) => {
   let styleOfSize = "";
   switch (size) {
     case "medium":
@@ -35,7 +36,7 @@ const Button: FC<Props> = ({ size, color, text, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={`rounded-[4px] border text-center duration-100 ${styleOfSize} ${styleOfColor}`}
+      className={` rounded-[4px] border  text-center outline-none duration-100 focus:shadow focus:shadow-primary ${styleOfSize} ${styleOfColor} ${className}`}
     >
       {text}
     </button>
