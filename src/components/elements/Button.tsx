@@ -35,6 +35,7 @@ const Button: FC<Props> = ({ size, color, text, onClick, className }) => {
 
   return (
     <button
+      type="button"
       onClick={onClick}
       className={` rounded-[4px] border  text-center outline-none duration-100 focus:shadow focus:shadow-primary ${styleOfSize} ${styleOfColor} ${className}`}
     >
