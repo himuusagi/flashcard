@@ -56,13 +56,13 @@ const CheckingAnswerAccordion: FC<Props> = ({
           isOpen ? "mt-[16px] leading-[1.5] opacity-100" : "mt-0 leading-[0] opacity-0"
         }`}
       >
-        <div className={`text-primary`}>
+        <div className={`text-primary-dark`}>
           <dt>解答</dt>
           <dd className={`${isOpen ? "mt-[4px]" : "mt-0"}`}>{lineBrokenAnswerTexts}</dd>
         </div>
 
         <div
-          className={`${trueOrFalse ? "text-primary-dark" : "text-gray"} ${
+          className={`${trueOrFalse ? "text-primary" : "text-gray"} ${
             isOpen ? "mt-[16px]" : "mt-0"
           }`}
         >
