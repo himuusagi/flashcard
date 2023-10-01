@@ -1,6 +1,7 @@
 import { type FC, type MouseEventHandler } from "react";
 
 type Props = {
+  type: "button" | "submit";
   size?: "medium" | "small";
   color?: "primary" | "gray";
   text: string;
@@ -8,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-const Button: FC<Props> = ({ size, color, text, onClick, className }) => {
+const Button: FC<Props> = ({ type, size, color, text, onClick, className }) => {
   let styleOfSize = "";
   switch (size) {
     case "medium":
@@ -35,7 +36,7 @@ const Button: FC<Props> = ({ size, color, text, onClick, className }) => {
 
   return (
     <button
-      type="button"
+      type={type}
       onClick={onClick}
       className={` rounded-[4px] border  text-center outline-none duration-100 focus:shadow focus:shadow-primary ${styleOfSize} ${styleOfColor} ${className}`}
     >
