@@ -33,7 +33,7 @@ const Card: FC<Props> = ({ title, href }) => {
       <h2 className="text-center text-xl text-primary">{title}</h2>
 
       <div className="mt-8 text-center">
-        <Button text="テストする" onClick={() => router.push(href)} />
+        <Button type="button" text="テストする" onClick={() => router.push(href)} />
       </div>
     </>
   );
