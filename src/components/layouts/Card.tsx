@@ -67,7 +67,7 @@ const Card: FC<Props> = ({ title, href }) => {
   );
 
   return (
-    <div className="mx-[100px] my-[100px] w-1/4">
+    <div>
       <div className="relative block min-h-[200px] rounded-[4px] border-2 border-primary px-[30px] py-[40px] shadow-lg shadow-primary-light">
         {contentType === "initial" ? initialContent : editContent}
       </div>
