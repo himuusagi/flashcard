@@ -4,7 +4,7 @@ type Props = {
   title: string;
 };
 
-const Heading: FC<Props> = ({ title }) => {
+const Heading1: FC<Props> = ({ title }) => {
   const lineBrokenTexts: ReactNode[] = [];
 
   title.split(/\n/).forEach((text, index) => {
@@ -28,4 +28,4 @@ const Heading: FC<Props> = ({ title }) => {
   );
 };
 
-export default Heading;
+export default Heading1;
