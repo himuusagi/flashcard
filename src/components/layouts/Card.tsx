@@ -49,10 +49,11 @@ const Card: FC<Props> = ({ title, href }) => {
       <div className="mt-[24px] flex justify-center">
         <ul>
           <li>
-            <LinkedText text="問題の登録" href={href} />
+            <LinkedText text="編集" href={href} />
           </li>
           <li className="mt-[8px]">
-            <LinkedText text="単語帳の編集" href={href} />
+            <LinkedText text="問題の一覧" href={href} />
+            <LinkedText text="問題の追加" href={href} className="ml-4" />
           </li>
           <li className="mt-[8px]">
             <LinkedText text="順番を前へ" href={href} />
