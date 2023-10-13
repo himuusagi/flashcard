@@ -1,18 +1,18 @@
 "use client";
 
 import { type FC } from "react";
-import { signIn } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Button from "./Button";
 
-const SigninButton: FC = () => {
+const SignoutButton: FC = () => {
   return (
     <Button
       type="button"
-      text="Googleでサインイン"
+      text="サインアウト"
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onClick={() => signIn("google", { callbackUrl: "/" })}
+      onClick={() => signOut({ callbackUrl: "/signin" })}
     />
   );
 };
 
-export default SigninButton;
+export default SignoutButton;
