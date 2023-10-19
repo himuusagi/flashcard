@@ -10,3 +10,20 @@ datasource db {
   url = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+
+model Flash_Card {
+  id               Int @id @default(autoincrement())
+  order            Int
+  userId           Int @unique
+  title            String @db.VarChar(20)
+  questionsAnswers Question_Answer[]
+}
+
+model Question_Answer {
+  id          Int @id @default(autoincrement())
+  order       Int
+  flashCard   Flash_Card @relation(fields: [flashCardId], references: [id])
+  flashCardId Int
+  question    String @db.VarChar(200)
+  answer      String @db.VarChar(400)
+}
