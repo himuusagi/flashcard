@@ -14,7 +14,7 @@ datasource db {
 model Flash_Card {
   id               Int @id @default(autoincrement())
   order            Int
-  userId           Int @unique
+  userId           Int
   title            String @db.VarChar(20)
   questionsAnswers Question_Answer[]
 }
