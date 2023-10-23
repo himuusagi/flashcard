@@ -4,7 +4,7 @@ import { useState, type FC } from "react";
 
 type Props = {
   type: "text" | "password";
-  placeholder?: string;
+  placeholder: string;
 };
 
 const TextField: FC<Props> = ({ type, placeholder }) => {
