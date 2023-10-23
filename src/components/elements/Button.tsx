@@ -9,31 +9,45 @@ type Props = {
   className?: string;
 };
 
-const Button: FC<Props> = ({ type, size, color, text, onClick, className }) => {
+const Button: FC<Props> = ({
+  type,
+  size = "medium",
+  color = "primary",
+  text,
+  onClick,
+  className,
+}) => {
   let styleOfSize = "";
   switch (size) {
-    case "medium":
+    case "medium": {
       styleOfSize = "min-w-[200px] px-[40px] py-[4px] text-xl";
       break;
-    case "small":
+    }
+    case "small": {
       styleOfSize = "small min-w-[160px] px-[20px] py-[6px] text-sm";
       break;
-    default:
-      styleOfSize = "min-w-[200px] px-[40px] py-[4px] text-xl";
+    }
+    default: {
+      const wrongSize: never = size;
+      throw new Error(`${wrongSize as string} is wrong type.`);
+    }
   }
 
   let styleOfColor = "";
   switch (color) {
-    case "primary":
+    case "primary": {
       styleOfColor =
         "border-primary hover:bg-primary text-primary hover:text-white outline-primary-dark";
       break;
-    case "gray":
+    }
+    case "gray": {
       styleOfColor = "border-gray hover:bg-gray text-gray hover:text-white outline-gray-dark";
       break;
-    default:
-      styleOfColor =
-        "border-primary hover:bg-primary text-primary hover:text-white outline-primary-dark";
+    }
+    default: {
+      const wrongColor: never = color;
+      throw new Error(`${wrongColor as string} is wrong type.`);
+    }
   }
 
   return (
