@@ -15,7 +15,7 @@ const Heading1: FC<Props> = ({ title }) => {
   });
 
   return (
-    <div className="flex justify-center">
+    <div className="mb-[40px] flex justify-center">
       <div className="relative min-w-[280px] px-[40px] py-[8px] text-center">
         <h1 className="text-2xl text-primary">{lineBrokenTexts}</h1>
         <div className=" absolute left-0 top-0 h-[10px] w-[10px] border border-transparent border-l-primary border-t-primary " />
