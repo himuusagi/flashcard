@@ -8,7 +8,7 @@ type Props = {
   color?: "primary" | "gray";
 };
 
-const TextArea: FC<Props> = ({ placeholder, color }) => {
+const TextArea: FC<Props> = ({ placeholder, color = "primary" }) => {
   let textAreaStyleOfColor: string;
   let labelStyleOfColor: string;
   let focusedLabelStyleOfColor: string;
@@ -29,10 +29,8 @@ const TextArea: FC<Props> = ({ placeholder, color }) => {
       break;
     }
     default: {
-      textAreaStyleOfColor = "text-primary placeholder-primary-light focus:text-primary-dark";
-      labelStyleOfColor = "peer-focus:text-primary-dark";
-      focusedLabelStyleOfColor = "text-primary";
-      borderStyleOfColor = "bg-primary peer-focus:bg-primary-dark";
+      const wrongColor: never = color;
+      throw new Error(`${wrongColor as string} is wrong type.`);
     }
   }
 
