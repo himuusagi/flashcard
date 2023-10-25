@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { type FC, useState } from "react";
 
 type Props = {
   type: "text" | "password";
+  name?: string;
   placeholder: string;
 };
 
-const TextField: FC<Props> = ({ type, placeholder }) => {
+const TextField: FC<Props> = ({ type, name, placeholder }) => {
   const [value, setValue] = useState("");
 
   return (
     <div className="relative">
       <input
         type={type}
+        name={name}
         value={value}
         placeholder={placeholder}
         onChange={(e) => setValue(e.target.value)}
