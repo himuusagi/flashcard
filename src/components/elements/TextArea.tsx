@@ -3,7 +3,8 @@
 import { useState, useRef, type FC, type ChangeEventHandler } from "react";
 
 type Props = {
-  placeholder?: string;
+  name?: string;
+  placeholder: string;
   color?: "primary" | "gray";
 };
 
