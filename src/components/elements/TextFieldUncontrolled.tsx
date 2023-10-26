@@ -1,0 +1,48 @@
+"use client";
+
+import { useRef, type FC, type FocusEventHandler } from "react";
+
+type Props = {
+  type: "text" | "password";
+  name?: string;
+  placeholder: string;
+};
+
+const TextFieldUncontrolled: FC<Props> = ({ type, name, placeholder }) => {
+  const spanRef = useRef<HTMLSpanElement | null>(null);
+
+  const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
+    const value = e.target.value;
+    if (value.length > 0) {
+      spanRef.current?.classList.add("inline");
+      spanRef.current?.classList.remove("hidden");
+    } else {
+      spanRef.current?.classList.add("hidden");
+      spanRef.current?.classList.remove("inline");
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        type={type}
+        name={name}
+        placeholder={placeholder}
+        onBlur={onBlur}
+        className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none duration-150 focus:text-primary-dark focus:placeholder-transparent"
+      />
+      <span
+        ref={spanRef}
+        className={`absolute left-[32px] top-[-10px] hidden text-[10px] text-primary duration-150 peer-focus:inline peer-focus:text-primary-dark
+        `}
+      >
+        {placeholder}
+      </span>
+      <div className="absolute bottom-0 left-0 h-[1px] w-full bg-primary duration-150 peer-focus:bg-primary-dark" />
+      <div className="absolute bottom-0 left-0 h-[10px] w-[1px] bg-primary duration-150 peer-focus:bg-primary-dark" />
+      <div className="absolute bottom-0 right-0 h-[10px] w-[1px] bg-primary duration-150 peer-focus:bg-primary-dark" />
+    </div>
+  );
+};
+
+export default TextFieldUncontrolled;
