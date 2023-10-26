@@ -22,8 +22,8 @@ const TextField: FC<Props> = ({ type, name, placeholder }) => {
         className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none duration-150 focus:text-primary-dark focus:placeholder-transparent"
       />
       <span
-        className={`absolute left-[32px] top-[-10px] text-[10px] duration-150 peer-focus:text-primary-dark
-        ${value.length > 0 ? "text-primary focus:text-primary-dark" : "text-transparent"}
+        className={`absolute left-[32px] top-[-10px] text-[10px] text-primary duration-150 peer-focus:inline peer-focus:text-primary-dark
+        ${value.length > 0 ? "inline" : "hidden"}
         `}
       >
         {placeholder}
