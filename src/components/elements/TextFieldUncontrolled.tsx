@@ -1,14 +1,18 @@
 "use client";
 
-import { useRef, type FC, type FocusEventHandler } from "react";
+import { useRef, type FocusEventHandler } from "react";
+import { useController, type UseControllerProps, type FieldValues } from "react-hook-form";
 
-type Props = {
+type Props<T extends FieldValues> = UseControllerProps<T> & {
   type: "text" | "password";
   name?: string;
   placeholder: string;
 };
 
-const TextFieldUncontrolled: FC<Props> = ({ type, name, placeholder }) => {
+const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
+  const { type, name, placeholder, rules, control } = props;
+  const { field } = useController<T>({ name, control, rules });
+
   const spanRef = useRef<HTMLSpanElement | null>(null);
 
   const onBlur: FocusEventHandler<HTMLInputElement> = (e) => {
@@ -25,8 +29,8 @@ const TextFieldUncontrolled: FC<Props> = ({ type, name, placeholder }) => {
   return (
     <div className="relative">
       <input
+        {...field}
         type={type}
-        name={name}
         placeholder={placeholder}
         onBlur={onBlur}
         className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none duration-150 focus:text-primary-dark focus:placeholder-transparent"
@@ -45,4 +49,4 @@ const TextFieldUncontrolled: FC<Props> = ({ type, name, placeholder }) => {
   );
 };
 
-export default TextFieldUncontrolled;
+export default ControlledTextField;
