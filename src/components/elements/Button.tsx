@@ -6,6 +6,7 @@ type Props = {
   color?: "primary" | "gray";
   text: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
   className?: string;
 };
 
@@ -15,6 +16,7 @@ const Button: FC<Props> = ({
   color = "primary",
   text,
   onClick,
+  disabled,
   className,
 }) => {
   let styleOfSize = "";
@@ -54,6 +56,7 @@ const Button: FC<Props> = ({
     <button
       type={type}
       onClick={onClick}
+      disabled={disabled}
       className={`rounded-[4px] border text-center duration-100 ${styleOfSize} ${styleOfColor} ${className}`}
     >
       {text}
