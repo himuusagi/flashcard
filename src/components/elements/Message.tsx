@@ -2,7 +2,7 @@ import { type FC } from "react";
 
 type Props = {
   type: "success" | "error";
-  text: string | null;
+  text: string | undefined;
 };
 
 const Message: FC<Props> = ({ type, text }) => {
