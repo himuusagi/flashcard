@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC } from "react";
+import { useState, type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import ControlledTextField from "../elements/ControlledTextField";
 import Button from "../elements/Button";
@@ -9,16 +9,39 @@ import Message from "../elements/Message";
 type FormValues = { title: string };
 
 const AddFlashcardForm: FC = () => {
+  const [submissionResult, setSubmissionResult] = useState<{
+    success: boolean;
+    message: string;
+  } | null>(null);
+
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     defaultValues: { title: "" },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = () => {
-    console.log("送信！");
+  const onSubmit: SubmitHandler<FormValues> = async (formData) => {
+    setSubmissionResult(null);
+    try {
+      const response = await fetch("/api/flashcard", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = (await response.json()) as { message: string };
+
+      if (response.ok) {
+        setSubmissionResult({ success: true, message: "単語帳が追加されました" });
+      } else {
+        setSubmissionResult({ success: false, message: data.message });
+      }
+    } catch (error) {
+      setSubmissionResult({ success: false, message: (error as { message: string }).message });
+    }
+    reset();
   };
 
   return (
@@ -41,7 +64,13 @@ const AddFlashcardForm: FC = () => {
       </div>
 
       <div className="mt-[32px] text-center">
-        <Button type="submit" text="登録する" />
+        <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
+        {submissionResult && (
+          <Message
+            type={submissionResult.success ? "success" : "error"}
+            text={submissionResult.message}
+          />
+        )}
       </div>
     </form>
   );
