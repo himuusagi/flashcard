@@ -39,11 +39,12 @@ const Button: FC<Props> = ({
   switch (color) {
     case "primary": {
       styleOfColor =
-        "border-primary hover:bg-primary text-primary hover:text-white outline-primary-dark";
+        "border-primary hover:bg-primary text-primary hover:text-white outline-primary-dark disabled:text-primary-light disabled:border-primary-light";
       break;
     }
     case "gray": {
-      styleOfColor = "border-gray hover:bg-gray text-gray hover:text-white outline-gray-dark";
+      styleOfColor =
+        "border-gray hover:bg-gray text-gray hover:text-white outline-gray-dark disabled:text-gray-light disabled:border-gray-light";
       break;
     }
     default: {
@@ -57,7 +58,7 @@ const Button: FC<Props> = ({
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`rounded-[4px] border text-center duration-100 ${styleOfSize} ${styleOfColor} ${className}`}
+      className={`rounded-[4px] border text-center duration-100 disabled:pointer-events-none ${styleOfSize} ${styleOfColor} ${className}`}
     >
       {text}
     </button>
