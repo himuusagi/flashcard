@@ -11,9 +11,7 @@ const Message: FC<Props> = ({ type, text }) => {
   }
 
   return (
-    <span className={`inline-block text-sm ${type === "success" ? "text-primary" : "text-accent"}`}>
-      {text}
-    </span>
+    <p className={`mt-2 text-sm ${type === "success" ? "text-primary" : "text-accent"}`}>{text}</p>
   );
 };
 
