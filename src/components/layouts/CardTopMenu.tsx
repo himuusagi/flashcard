@@ -3,6 +3,7 @@ import EllipsisButton from "../elements/EllipsisButton";
 import Button from "../elements/Button";
 
 type Props = {
+  flashcardId: number;
   title: string;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
