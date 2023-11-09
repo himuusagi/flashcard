@@ -2,6 +2,7 @@ import { type FC, type MouseEventHandler } from "react";
 import CloseButton from "../elements/CloseButton";
 import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
+import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 
 type Props = { flashcardId: number; title: string; onClick: MouseEventHandler<HTMLButtonElement> };
 
@@ -33,7 +34,17 @@ const CardEditMenu: FC<Props> = ({ flashcardId, title, onClick }) => {
               <ClickableText text="順番を後ろへ" className="ml-4" />
             </li>
             <li className="mt-[8px]">
-              <ClickableText text="削除" />
+              <ClickableText
+                text="削除"
+                // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                formAction={async () => {
+                  try {
+                    await deleteFlashcard(flashcardId);
+                  } catch (error) {
+                    console.error(error);
+                  }
+                }}
+              />
             </li>
           </ul>
         </form>
