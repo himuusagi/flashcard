@@ -3,6 +3,7 @@ import CloseButton from "../elements/CloseButton";
 import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
 import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
+import { moveFlashcardForward } from "@/utils/server-actions/move-flashcard-forward";
 
 type Props = {
   flashcardId: number;
@@ -44,7 +45,13 @@ const CardEditMenu: FC<Props> = ({
               />
             </li>
             <li className="mt-[8px]">
-              {isFirst || <ClickableText text="順番を前へ" />}
+              {isFirst || (
+                <ClickableText
+                  text="順番を前へ"
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                  formAction={async () => await moveFlashcardForward(flashcardId, flashcardOrder)}
+                />
+              )}
               {isLast || <ClickableText text="順番を後ろへ" className={isFirst ? "" : "ml-4"} />}
             </li>
             <li className="mt-[8px]">
