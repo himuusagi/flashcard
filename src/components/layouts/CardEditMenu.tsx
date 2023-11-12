@@ -8,10 +8,19 @@ type Props = {
   flashcardId: number;
   flashcardOrder: number;
   title: string;
+  isFirst: boolean;
+  isLast: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const CardEditMenu: FC<Props> = ({ flashcardId, flashcardOrder, title, onClick }) => {
+const CardEditMenu: FC<Props> = ({
+  flashcardId,
+  flashcardOrder,
+  title,
+  isFirst,
+  isLast,
+  onClick,
+}) => {
   return (
     <div className="relative px-[30px] py-[16px]">
       <div className="absolute right-[8px] top-[8px]">
@@ -35,8 +44,8 @@ const CardEditMenu: FC<Props> = ({ flashcardId, flashcardOrder, title, onClick }
               />
             </li>
             <li className="mt-[8px]">
-              <ClickableText text="順番を前へ" />
-              <ClickableText text="順番を後ろへ" className="ml-4" />
+              {isFirst || <ClickableText text="順番を前へ" />}
+              {isLast || <ClickableText text="順番を後ろへ" className={isFirst ? "" : "ml-4"} />}
             </li>
             <li className="mt-[8px]">
               <ClickableText

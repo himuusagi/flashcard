@@ -8,9 +8,11 @@ type Props = {
   flashcardId: number;
   flashcardOrder: number;
   title: string;
+  isFirst: boolean;
+  isLast: boolean;
 };
 
-const Card: FC<Props> = ({ flashcardId, flashcardOrder, title }) => {
+const Card: FC<Props> = ({ flashcardId, flashcardOrder, title, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"top" | "edit">("top");
 
   const switchContent = () => {
@@ -26,6 +28,8 @@ const Card: FC<Props> = ({ flashcardId, flashcardOrder, title }) => {
           flashcardId={flashcardId}
           flashcardOrder={flashcardOrder}
           title={title}
+          isFirst={isFirst}
+          isLast={isLast}
           onClick={switchContent}
         />
       )}
