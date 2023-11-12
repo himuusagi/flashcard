@@ -8,7 +8,6 @@ type Props = {
   flashcardId: number;
   flashcardOrder: number;
   title: string;
-  href: string;
 };
 
 const Card: FC<Props> = ({ flashcardId, flashcardOrder, title }) => {

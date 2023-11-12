@@ -13,7 +13,7 @@ const FlashcardList: FC<Props> = ({ flashcards }) => {
             key={id}
             className="ml-[40px] mt-[40px] w-[calc((100%-_80px)_/_3)] [&:nth-child(-n+3)]:mt-0 [&:nth-child(3n+1)]:ml-0"
           >
-            <Card flashcardId={id} flashcardOrder={order} title={title} href="" />
+            <Card flashcardId={id} flashcardOrder={order} title={title} />
           </li>
         );
       })}

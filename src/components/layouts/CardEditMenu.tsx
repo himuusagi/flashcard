@@ -42,13 +42,7 @@ const CardEditMenu: FC<Props> = ({ flashcardId, flashcardOrder, title, onClick }
               <ClickableText
                 text="削除"
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                formAction={async () => {
-                  try {
-                    await deleteFlashcard(flashcardId, flashcardOrder);
-                  } catch (error) {
-                    console.error(error);
-                  }
-                }}
+                formAction={async () => await deleteFlashcard(flashcardId, flashcardOrder)}
               />
             </li>
           </ul>
