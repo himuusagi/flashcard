@@ -6,11 +6,12 @@ import CardEditMenu from "./CardEditMenu";
 
 type Props = {
   flashcardId: number;
+  flashcardOrder: number;
   title: string;
   href: string;
 };
 
-const Card: FC<Props> = ({ flashcardId, title }) => {
+const Card: FC<Props> = ({ flashcardId, flashcardOrder, title }) => {
   const [contentType, setContentType] = useState<"top" | "edit">("top");
 
   const switchContent = () => {
@@ -22,7 +23,12 @@ const Card: FC<Props> = ({ flashcardId, title }) => {
       {contentType === "top" ? (
         <CardTopMenu flashcardId={flashcardId} title={title} onClick={switchContent} />
       ) : (
-        <CardEditMenu flashcardId={flashcardId} title={title} onClick={switchContent} />
+        <CardEditMenu
+          flashcardId={flashcardId}
+          flashcardOrder={flashcardOrder}
+          title={title}
+          onClick={switchContent}
+        />
       )}
     </div>
   );

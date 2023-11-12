@@ -4,9 +4,14 @@ import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
 import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 
-type Props = { flashcardId: number; title: string; onClick: MouseEventHandler<HTMLButtonElement> };
+type Props = {
+  flashcardId: number;
+  flashcardOrder: number;
+  title: string;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+};
 
-const CardEditMenu: FC<Props> = ({ flashcardId, title, onClick }) => {
+const CardEditMenu: FC<Props> = ({ flashcardId, flashcardOrder, title, onClick }) => {
   return (
     <div className="relative px-[30px] py-[16px]">
       <div className="absolute right-[8px] top-[8px]">
@@ -39,7 +44,7 @@ const CardEditMenu: FC<Props> = ({ flashcardId, title, onClick }) => {
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 formAction={async () => {
                   try {
-                    await deleteFlashcard(flashcardId);
+                    await deleteFlashcard(flashcardId, flashcardOrder);
                   } catch (error) {
                     console.error(error);
                   }
