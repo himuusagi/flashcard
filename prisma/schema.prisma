@@ -17,8 +17,6 @@ model Flash_Card {
   userId           String
   title            String @db.VarChar(20)
   questionsAnswers Question_Answer[]
-
-  @@unique([order, userId])
 }
 
 model Question_Answer {
@@ -28,6 +26,4 @@ model Question_Answer {
   flashCardId Int
   question    String @db.VarChar(200)
   answer      String @db.VarChar(400)
-
-  @@unique([order, flashCardId])
 }

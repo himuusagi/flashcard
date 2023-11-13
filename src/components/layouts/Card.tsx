@@ -1,77 +1,39 @@
 "use client";
 
 import { useState, type FC } from "react";
-import { useRouter } from "next/navigation";
-import Button from "../elements/Button";
-import CloseButton from "../elements/CloseButton";
-import EllipsisButton from "../elements/EllipsisButton";
-import LinkedText from "../elements/LinkedText";
+import CardTopMenu from "./CardTopMenu";
+import CardEditMenu from "./CardEditMenu";
 
 type Props = {
+  flashcardId: number;
+  flashcardOrder: number;
   title: string;
-  href: string;
+  isFirst: boolean;
+  isLast: boolean;
 };
 
-const Card: FC<Props> = ({ title, href }) => {
-  const router = useRouter();
-  const [contentType, setContentType] = useState<"initial" | "edit">("initial");
+const Card: FC<Props> = ({ flashcardId, flashcardOrder, title, isFirst, isLast }) => {
+  const [contentType, setContentType] = useState<"top" | "edit">("top");
 
   const switchContent = () => {
-    if (contentType === "initial") {
-      setContentType("edit");
-    } else {
-      setContentType("initial");
-    }
+    contentType === "top" ? setContentType("edit") : setContentType("top");
   };
 
-  const initialContent = (
-    <>
-      <div className="absolute right-[8px] top-[8px]">
-        <EllipsisButton onClick={switchContent} />
-      </div>
-
-      <h2 className="text-center text-xl text-primary">{title}</h2>
-
-      <div className="mt-8 text-center">
-        <Button type="button" text="テストする" onClick={() => router.push(href)} />
-      </div>
-    </>
-  );
-
-  const editContent = (
-    <>
-      <div className="absolute right-[8px] top-[8px]">
-        <CloseButton onClick={switchContent} />
-      </div>
-
-      <h2 className="text-center text-primary">{title}</h2>
-
-      <div className="mt-[24px] flex justify-center">
-        <ul>
-          <li>
-            <LinkedText text="編集" href={href} />
-          </li>
-          <li className="mt-[8px]">
-            <LinkedText text="問題の一覧" href={href} />
-            <LinkedText text="問題の追加" href={href} className="ml-4" />
-          </li>
-          <li className="mt-[8px]">
-            <LinkedText text="順番を前へ" href={href} />
-            <LinkedText text="順番を後ろへ" href={href} className="ml-4" />
-          </li>
-          <li className="mt-[8px]">
-            <LinkedText text="削除" href={href} />
-          </li>
-        </ul>
-      </div>
-    </>
-  );
-
   return (
-    <div>
-      <div className="relative block min-h-[200px] rounded-[4px] border-2 border-primary px-[30px] py-[40px] shadow-lg shadow-primary-light">
-        {contentType === "initial" ? initialContent : editContent}
-      </div>
+    <div className="min-h-[200px] rounded-[4px] border-2 border-primary shadow-lg shadow-primary-light">
+      {contentType === "top" ? (
+        <CardTopMenu flashcardId={flashcardId} title={title} onClick={switchContent} />
+      ) : (
+        <CardEditMenu
+          flashcardId={flashcardId}
+          flashcardOrder={flashcardOrder}
+          title={title}
+          isFirst={isFirst}
+          isLast={isLast}
+          setContentType={setContentType}
+          onClick={switchContent}
+        />
+      )}
     </div>
   );
 };
