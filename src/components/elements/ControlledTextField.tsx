@@ -5,7 +5,7 @@ import { useController, type UseControllerProps, type FieldValues } from "react-
 
 type Props<T extends FieldValues> = UseControllerProps<T> & {
   type: "text" | "password";
-  name?: string;
+  name?: keyof FieldValues;
   placeholder: string;
 };
 
