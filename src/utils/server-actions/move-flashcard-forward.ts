@@ -4,8 +4,8 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 
-export const moveFlashcardForward = async (id: number, order: number) => {
-  if (order === 1) {
+export const moveFlashcardForward = async (id: number, order: number, isFirst: boolean) => {
+  if (isFirst) {
     throw new Error("リクエストが不正です");
   }
 
