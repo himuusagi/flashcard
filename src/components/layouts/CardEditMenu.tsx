@@ -1,9 +1,10 @@
-import { type FC, type MouseEventHandler } from "react";
+import { type FC, type MouseEventHandler, type Dispatch, type SetStateAction } from "react";
 import CloseButton from "../elements/CloseButton";
 import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
 import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 import { moveFlashcardForward } from "@/utils/server-actions/move-flashcard-forward";
+import { moveFlashcardBackward } from "@/utils/server-actions/move-flashcard-backward";
 
 type Props = {
   flashcardId: number;
@@ -11,6 +12,7 @@ type Props = {
   title: string;
   isFirst: boolean;
   isLast: boolean;
+  setContentType: Dispatch<SetStateAction<"top" | "edit">>;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -20,6 +22,7 @@ const CardEditMenu: FC<Props> = ({
   title,
   isFirst,
   isLast,
+  setContentType,
   onClick,
 }) => {
   return (
@@ -49,16 +52,32 @@ const CardEditMenu: FC<Props> = ({
                 <ClickableText
                   text="順番を前へ"
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                  formAction={async () => await moveFlashcardForward(flashcardId, flashcardOrder)}
+                  formAction={async () => {
+                    setContentType("top");
+                    await moveFlashcardForward(flashcardId, flashcardOrder, isFirst);
+                  }}
                 />
               )}
-              {isLast || <ClickableText text="順番を後ろへ" className={isFirst ? "" : "ml-4"} />}
+              {isLast || (
+                <ClickableText
+                  text="順番を後ろへ"
+                  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+                  formAction={async () => {
+                    setContentType("top");
+                    await moveFlashcardBackward(flashcardId, flashcardOrder, isLast);
+                  }}
+                  className={isFirst ? "" : "ml-4"}
+                />
+              )}
             </li>
             <li className="mt-[8px]">
               <ClickableText
                 text="削除"
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-                formAction={async () => await deleteFlashcard(flashcardId, flashcardOrder)}
+                formAction={async () => {
+                  setContentType("top");
+                  await deleteFlashcard(flashcardId, flashcardOrder);
+                }}
               />
             </li>
           </ul>

@@ -11,7 +11,8 @@ export const deleteFlashcard = async (id: number, order: number) => {
   }
 
   const userId = session.user.email;
-  await prisma.flash_Card.delete({ where: { id: id } });
+  await prisma.flash_Card.delete({ where: { id } });
+
   await prisma.flash_Card.updateMany({
     where: { userId: userId, order: { gte: order } },
     data: {
