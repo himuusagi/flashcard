@@ -30,6 +30,7 @@ const Card: FC<Props> = ({ flashcardId, flashcardOrder, title, isFirst, isLast }
           title={title}
           isFirst={isFirst}
           isLast={isLast}
+          setContentType={setContentType}
           onClick={switchContent}
         />
       )}
