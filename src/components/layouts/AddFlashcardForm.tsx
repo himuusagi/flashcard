@@ -32,12 +32,7 @@ const AddFlashcardForm: FC = () => {
         body: JSON.stringify(formData),
       });
       const data = (await response.json()) as { message: string };
-
-      if (response.ok) {
-        setSubmissionResult({ success: true, message: "単語帳が追加されました" });
-      } else {
-        setSubmissionResult({ success: false, message: data.message });
-      }
+      setSubmissionResult({ success: response.ok, message: data.message });
     } catch (error) {
       setSubmissionResult({ success: false, message: (error as { message: string }).message });
     }
