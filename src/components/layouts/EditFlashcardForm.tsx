@@ -1,33 +1,36 @@
 "use client";
 
-import { useState, type FC } from "react";
-import { useForm, type SubmitHandler } from "react-hook-form";
-import ControlledTextField from "../elements/ControlledTextField";
+import { type FC, useState } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import Button from "../elements/Button";
+import ControlledTextField from "../elements/ControlledTextField";
 import Message from "../elements/Message";
 
-type FormValues = { title: string };
+type FormValues = { id: number; title: string };
 
-const AddFlashcardForm: FC = () => {
+type Props = {
+  flashcardId: number;
+  flashcardTitle: string;
+};
+
+const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
   const [submissionResult, setSubmissionResult] = useState<{
     success: boolean;
     message: string;
   } | null>(null);
 
   const {
+    register,
     handleSubmit,
     control,
-    reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormValues>({
-    defaultValues: { title: "" },
-  });
+  } = useForm<FormValues>({ defaultValues: { id: flashcardId, title: flashcardTitle } });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
     setSubmissionResult(null);
     try {
       const response = await fetch("/api/flashcard", {
-        method: "POST",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
@@ -36,7 +39,6 @@ const AddFlashcardForm: FC = () => {
     } catch (error) {
       setSubmissionResult({ success: false, message: (error as { message: string }).message });
     }
-    reset();
   };
 
   return (
@@ -47,8 +49,9 @@ const AddFlashcardForm: FC = () => {
       <div>
         <ControlledTextField<FormValues>
           type="text"
-          placeholder="タイトル"
           name="title"
+          placeholder="タイトル"
+          hasDefaultValue={true}
           control={control}
           rules={{
             required: "記入してください",
@@ -57,6 +60,8 @@ const AddFlashcardForm: FC = () => {
         />
         <Message type="error" text={errors.title?.message} />
       </div>
+
+      <input type="hidden" {...register("id")} />
 
       <div className="mt-[32px] text-center">
         <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
@@ -71,4 +76,4 @@ const AddFlashcardForm: FC = () => {
   );
 };
 
-export default AddFlashcardForm;
+export default EditFlashcardForm;

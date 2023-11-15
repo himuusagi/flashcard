@@ -5,12 +5,13 @@ import { useController, type UseControllerProps, type FieldValues } from "react-
 
 type Props<T extends FieldValues> = UseControllerProps<T> & {
   type: "text" | "password";
-  name?: string;
+  name?: keyof FieldValues;
   placeholder: string;
+  hasDefaultValue?: boolean;
 };
 
 const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
-  const { type, name, placeholder, rules, control } = props;
+  const { type, name, placeholder, hasDefaultValue = false, rules, control } = props;
   const { field } = useController<T>({ name, control, rules });
 
   const spanRef = useRef<HTMLSpanElement | null>(null);
@@ -37,8 +38,9 @@ const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
       />
       <span
         ref={spanRef}
-        className={`absolute left-[32px] top-[-10px] hidden text-[10px] text-primary duration-150 peer-focus:inline peer-focus:text-primary-dark
-        `}
+        className={`absolute left-[32px] top-[-10px] text-[10px] text-primary duration-150 peer-focus:inline peer-focus:text-primary-dark ${
+          hasDefaultValue ? "inline" : "hidden"
+        }`}
       >
         {placeholder}
       </span>
