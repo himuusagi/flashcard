@@ -51,6 +51,7 @@ const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
           type="text"
           name="title"
           placeholder="タイトル"
+          hasDefaultValue={true}
           control={control}
           rules={{
             required: "記入してください",
