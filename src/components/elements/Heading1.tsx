@@ -1,7 +1,7 @@
 import { type FC, type ReactNode } from "react";
 
 type Props = {
-  title: string;
+  title: string | string[];
   color?: "primary" | "accent";
 };
 
@@ -25,19 +25,23 @@ const Heading1: FC<Props> = ({ title, color = "primary" }) => {
     }
   }
 
-  const lineBrokenTexts: ReactNode[] = [];
+  const headingTitle: ReactNode[] = [];
 
-  title.split(/\n/).forEach((text, index) => {
-    if (index !== 0) {
-      lineBrokenTexts.push(<br key={index} />);
-    }
-    lineBrokenTexts.push(text);
-  });
+  if (typeof title === "string") {
+    headingTitle.push(title);
+  } else {
+    title.forEach((text, index) => {
+      if (index !== 0) {
+        headingTitle.push(<br key={index} />);
+      }
+      headingTitle.push(text);
+    });
+  }
 
   return (
     <div className="mb-[40px] flex justify-center">
       <div className="relative min-w-[280px] px-[40px] py-[8px] text-center">
-        <h1 className={`text-2xl text-primary ${styleOfTextColor}`}>{lineBrokenTexts}</h1>
+        <h1 className={`text-2xl text-primary ${styleOfTextColor}`}>{headingTitle}</h1>
         <div
           className={`absolute left-0 top-0 h-[10px] w-[10px] border-l border-t ${styleOfBorderColor}`}
         />
