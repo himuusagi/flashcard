@@ -38,7 +38,7 @@ export const PATCH = async (req: NextRequest) => {
     }
 
     await editFlashcard(id, title);
-    return NextResponse.json({ message: "データが正常に更新されました" }, { status: 201 });
+    return NextResponse.json({ message: "データが正常に更新されました" }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: "サーバー内部でエラーが発生しました" }, { status: 500 });
   }
