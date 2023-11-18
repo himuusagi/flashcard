@@ -8,7 +8,6 @@ import { moveFlashcardBackward } from "@/utils/server-actions/move-flashcard-bac
 
 type Props = {
   flashcardId: number;
-  flashcardOrder: number;
   title: string;
   isFirst: boolean;
   isLast: boolean;
@@ -18,7 +17,6 @@ type Props = {
 
 const CardEditMenu: FC<Props> = ({
   flashcardId,
-  flashcardOrder,
   title,
   isFirst,
   isLast,
@@ -54,7 +52,7 @@ const CardEditMenu: FC<Props> = ({
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
                     setContentType("top");
-                    await moveFlashcardForward(flashcardId, flashcardOrder, isFirst);
+                    await moveFlashcardForward(flashcardId);
                   }}
                 />
               )}
@@ -64,7 +62,7 @@ const CardEditMenu: FC<Props> = ({
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
                     setContentType("top");
-                    await moveFlashcardBackward(flashcardId, flashcardOrder, isLast);
+                    await moveFlashcardBackward(flashcardId);
                   }}
                   className={isFirst ? "" : "ml-4"}
                 />
@@ -76,7 +74,7 @@ const CardEditMenu: FC<Props> = ({
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 formAction={async () => {
                   setContentType("top");
-                  await deleteFlashcard(flashcardId, flashcardOrder);
+                  await deleteFlashcard(flashcardId);
                 }}
               />
             </li>

@@ -6,13 +6,12 @@ import CardEditMenu from "./CardEditMenu";
 
 type Props = {
   flashcardId: number;
-  flashcardOrder: number;
   title: string;
   isFirst: boolean;
   isLast: boolean;
 };
 
-const Card: FC<Props> = ({ flashcardId, flashcardOrder, title, isFirst, isLast }) => {
+const Card: FC<Props> = ({ flashcardId, title, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"top" | "edit">("top");
 
   const switchContent = () => {
@@ -26,7 +25,6 @@ const Card: FC<Props> = ({ flashcardId, flashcardOrder, title, isFirst, isLast }
       ) : (
         <CardEditMenu
           flashcardId={flashcardId}
-          flashcardOrder={flashcardOrder}
           title={title}
           isFirst={isFirst}
           isLast={isLast}
