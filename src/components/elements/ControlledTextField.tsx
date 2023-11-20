@@ -27,6 +27,11 @@ const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
     }
   };
 
+  const onFocus: FocusEventHandler<HTMLInputElement> = (e) => {
+    if (hasDefaultValue) {
+      e.target.select();
+    }
+  };
   return (
     <div className="relative">
       <input
@@ -34,6 +39,7 @@ const ControlledTextField = <T extends FieldValues>(props: Props<T>) => {
         type={type}
         placeholder={placeholder}
         onBlur={onBlur}
+        onFocus={onFocus}
         className="peer w-full px-[32px] py-[4px] text-primary placeholder-primary-light outline-none duration-150 focus:text-primary-dark focus:placeholder-transparent"
       />
       <span

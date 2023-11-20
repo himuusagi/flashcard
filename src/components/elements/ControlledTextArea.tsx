@@ -59,6 +59,12 @@ const ControlledTextArea = <T extends FieldValues>(props: Props<T>) => {
     }
   };
 
+  const onFocus: FocusEventHandler<HTMLTextAreaElement> = (e) => {
+    if (hasDefaultValue) {
+      e.target.select();
+    }
+  };
+
   return (
     <div className="relative">
       <textarea
@@ -66,6 +72,7 @@ const ControlledTextArea = <T extends FieldValues>(props: Props<T>) => {
         ref={textareaRef}
         placeholder={placeholder}
         onBlur={onBlur}
+        onFocus={onFocus}
         rows={1}
         className={`peer h-[32px] min-h-[32px] w-full resize-none overflow-hidden px-[32px] py-[4px] outline-none duration-150 focus:placeholder-transparent ${styleOfTextAreaColor}`}
       />
