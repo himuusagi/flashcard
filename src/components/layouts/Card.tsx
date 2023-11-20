@@ -15,7 +15,7 @@ const Card: FC<Props> = ({ flashcardId, title, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"top" | "edit">("top");
 
   const switchContent = () => {
-    contentType === "top" ? setContentType("edit") : setContentType("top");
+    setContentType((prev) => (prev === "top" ? "edit" : "top"));
   };
 
   return (
