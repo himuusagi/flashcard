@@ -35,13 +35,13 @@ const CardEditMenu: FC<Props> = ({
         <form>
           <ul>
             <li>
-              <LinkedText text="編集" href={`/flashcard/${flashcardId}/edit`} />
+              <LinkedText text="編集" href={`/flashcards/${flashcardId}/edit`} />
             </li>
             <li className="mt-[8px]">
-              <LinkedText text="問題の一覧" href={`/flashcard/${flashcardId}/q&a-list`} />
+              <LinkedText text="問題の一覧" href={`/flashcards/${flashcardId}/qa`} />
               <LinkedText
                 text="問題の追加"
-                href={`/flashcard/${flashcardId}/new-q&a`}
+                href={`/flashcards/${flashcardId}/qa/new`}
                 className="ml-4"
               />
             </li>
