@@ -8,7 +8,7 @@ type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
-const CardTopMenu: FC<Props> = ({ title, onClick }) => {
+const CardTopMenu: FC<Props> = ({ flashcardId, title, onClick }) => {
   return (
     <div className="relative px-[30px] py-[40px]">
       <div className="absolute right-[8px] top-[8px]">
@@ -18,7 +18,7 @@ const CardTopMenu: FC<Props> = ({ title, onClick }) => {
       <h2 className="text-center text-xl text-primary">{title}</h2>
 
       <div className="mt-8 text-center">
-        <Button type="button" text="テストする" />
+        <Button type="link" text="テストする" href={`/flashcards/${flashcardId}`} />
       </div>
     </div>
   );
