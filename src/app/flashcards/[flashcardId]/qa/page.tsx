@@ -2,12 +2,11 @@ import { type NextPage } from "next";
 import { notFound } from "next/navigation";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
-import Heading1 from "@/components/elements/Heading1";
-import Main from "@/components/layouts/Main";
-import Heading2 from "@/components/elements/Heading2";
-import Inner from "@/components/layouts/Inner";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
-import AddQAndAForm from "@/components/layouts/AddQAndAForm";
+import Heading1 from "@/components/elements/Heading1";
+import Inner from "@/components/layouts/Inner";
+import Main from "@/components/layouts/Main";
+import QAndACardList from "@/components/layouts/QAndACardList";
 
 type Props = {
   params: { flashcardId: string };
@@ -28,14 +27,18 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
     notFound();
   }
 
+  const qas = await prisma.question_Answer.findMany({
+    where: { flashCardId: Number(flashcardId) },
+    orderBy: { order: "asc" },
+  });
+
   return (
     <Main>
       <Heading1 title={flashcard.title} />
-      <Heading2 text="問題の追加" />
 
       <Inner width="narrow">
         <ContentWrapper>
-          <AddQAndAForm flashcardId={flashcard.id} />
+          <QAndACardList flashcardId={flashcard.id} qas={qas} />
         </ContentWrapper>
       </Inner>
     </Main>
