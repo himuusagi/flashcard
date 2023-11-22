@@ -9,33 +9,18 @@ import QAndAAccordion from "@/components/layouts/QAndAAccordion";
 import QAndAEditMenuList from "./QAndAEditMenuList";
 
 type Props = {
+  flashcardId: number;
+  qaId: number;
   questionText: string;
   answerText: string;
-  editQuestionHref: string;
-  editAnswerHref: string;
-  orderForwardHref: string;
-  orderBackHref: string;
-  deleteQAndAHref: string;
 };
 
-const QAndACard: FC<Props> = ({
-  questionText,
-  answerText,
-  editQuestionHref,
-  editAnswerHref,
-  orderForwardHref,
-  orderBackHref,
-  deleteQAndAHref,
-}) => {
+const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText }) => {
   const [contentType, setContentType] = useState<"q&a" | "edit">("q&a");
   const [isOpen, setIsOpen] = useState(false);
 
   const switchContentType = () => {
-    if (contentType === "q&a") {
-      setContentType("edit");
-    } else {
-      setContentType("q&a");
-    }
+    setContentType((prev) => (prev === "q&a" ? "edit" : "q&a"));
   };
 
   return (
@@ -51,13 +36,7 @@ const QAndACard: FC<Props> = ({
             />
           ) : (
             <div className="mx-auto">
-              <QAndAEditMenuList
-                editQuestionHref={editQuestionHref}
-                editAnswerHref={editAnswerHref}
-                orderForwardHref={orderForwardHref}
-                orderBackHref={orderBackHref}
-                deleteQAndAHref={deleteQAndAHref}
-              />
+              <QAndAEditMenuList flashcardId={flashcardId} qaId={qaId} />
             </div>
           )}
 
