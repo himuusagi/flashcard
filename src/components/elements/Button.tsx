@@ -1,7 +1,9 @@
 import { type FC, type MouseEventHandler } from "react";
+import Link from "next/link";
 
 type Props = {
-  type: "button" | "submit";
+  type: "button" | "submit" | "link";
+  href?: string;
   size?: "medium" | "small";
   color?: "primary" | "gray";
   text: string;
@@ -12,6 +14,7 @@ type Props = {
 
 const Button: FC<Props> = ({
   type,
+  href = "",
   size = "medium",
   color = "primary",
   text,
@@ -51,6 +54,17 @@ const Button: FC<Props> = ({
       const wrongColor: never = color;
       throw new Error(`${wrongColor as string} is wrong type.`);
     }
+  }
+
+  if (type === "link") {
+    return (
+      <Link
+        href={href}
+        className={`inline-block rounded-[4px] border text-center duration-100 disabled:pointer-events-none ${styleOfSize} ${styleOfColor} ${className}`}
+      >
+        {text}
+      </Link>
+    );
   }
 
   return (
