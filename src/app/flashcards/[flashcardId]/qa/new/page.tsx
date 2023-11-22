@@ -17,7 +17,7 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
   const session = await getServerSession();
   const userId = session?.user?.email;
   if (!userId) {
-    throw new Error("ユーザー情報が取得できませんでした");
+    throw new Error("認証が必要なため、リクエストが拒否されました");
   }
 
   const flashcard = await prisma.flash_Card.findUnique({
