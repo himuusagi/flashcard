@@ -1,5 +1,6 @@
 import { type FC, type Dispatch, type SetStateAction } from "react";
 import { deleteQuestionAnswer } from "@/utils/server-actions/delete-question-answer";
+import { moveQABackward } from "@/utils/server-actions/move-qa-backward";
 import { moveQAForward } from "@/utils/server-actions/move-qa-forward";
 import ClickableText from "../elements/ClickableText";
 import LinkedText from "../elements/LinkedText";
@@ -30,7 +31,17 @@ const QAndAEditMenuList: FC<Props> = ({ flashcardId, qaId, isFirst, isLast, setC
               }}
             />
           )}
-          {isLast || <ClickableText text="順番を後ろへ" className={isFirst ? "" : "ml-[28px]"} />}
+          {isLast || (
+            <ClickableText
+              text="順番を後ろへ"
+              // eslint-disable-next-line @typescript-eslint/no-misused-promises
+              formAction={async () => {
+                setContentType("q&a");
+                await moveQABackward(flashcardId, qaId);
+              }}
+              className={isFirst ? "" : "ml-[28px]"}
+            />
+          )}
         </li>
         <li className="mt-[4px]">
           <ClickableText
