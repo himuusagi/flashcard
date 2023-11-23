@@ -13,9 +13,11 @@ type Props = {
   qaId: number;
   questionText: string;
   answerText: string;
+  isFirst: boolean;
+  isLast: boolean;
 };
 
-const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText }) => {
+const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"q&a" | "edit">("q&a");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,7 +38,13 @@ const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText }) =
             />
           ) : (
             <div className="mx-auto">
-              <QAndAEditMenuList flashcardId={flashcardId} qaId={qaId} />
+              <QAndAEditMenuList
+                flashcardId={flashcardId}
+                qaId={qaId}
+                isFirst={isFirst}
+                isLast={isLast}
+                setContentType={setContentType}
+              />
             </div>
           )}
 
