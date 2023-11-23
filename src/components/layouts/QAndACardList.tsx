@@ -10,7 +10,10 @@ type Props = {
 const QAndACardList: FC<Props> = ({ flashcardId, qas }) => {
   return (
     <ul>
-      {qas.map(({ id, question, answer }) => {
+      {qas.map(({ id, question, answer }, index) => {
+        const isFirst = index === 0;
+        const isLast = index === qas.length - 1;
+
         return (
           <li key={id} className="mt-[32px] first:mt-0">
             <QAndACard
@@ -18,6 +21,8 @@ const QAndACardList: FC<Props> = ({ flashcardId, qas }) => {
               qaId={id}
               questionText={question}
               answerText={answer}
+              isFirst={isFirst}
+              isLast={isLast}
             />
           </li>
         );
