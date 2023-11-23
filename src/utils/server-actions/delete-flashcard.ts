@@ -16,7 +16,11 @@ export const deleteFlashcard = async (id: number) => {
     throw new Error("アクセスが禁止されているため、リクエストが拒否されました");
   }
 
+  await prisma.question_Answer.deleteMany({ where: { flashCardId: id } });
+
   await prisma.flash_Card.delete({ where: { id } });
+
+  revalidatePath("/");
 
   await prisma.flash_Card.updateMany({
     where: { userId: userId, order: { gte: flashcard.order } },
@@ -24,6 +28,4 @@ export const deleteFlashcard = async (id: number) => {
       order: { decrement: 1 },
     },
   });
-
-  revalidatePath("/");
 };
