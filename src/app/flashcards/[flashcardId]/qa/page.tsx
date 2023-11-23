@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import Heading1 from "@/components/elements/Heading1";
+import EmptyQAndAPanel from "@/components/layouts/EmptyQAndAPanel";
 import Inner from "@/components/layouts/Inner";
 import Main from "@/components/layouts/Main";
 import QAndACardList from "@/components/layouts/QAndACardList";
@@ -38,7 +39,11 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
 
       <Inner width="narrow">
         <ContentWrapper>
-          <QAndACardList flashcardId={flashcard.id} qas={qas} />
+          {qas.length > 0 ? (
+            <QAndACardList flashcardId={flashcard.id} qas={qas} />
+          ) : (
+            <EmptyQAndAPanel flashcardId={flashcard.id} />
+          )}
         </ContentWrapper>
       </Inner>
     </Main>
