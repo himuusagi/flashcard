@@ -2,6 +2,7 @@
 
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { editFlashcard } from "@/utils/server-actions/edit-flashcard";
 import Button from "../elements/Button";
 import ControlledTextField from "../elements/ControlledTextField";
 import Message from "../elements/Message";
@@ -28,23 +29,15 @@ const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
     setSubmissionResult(null);
-    try {
-      const response = await fetch("/api/flashcard", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = (await response.json()) as { message: string };
-      setSubmissionResult({ success: response.ok, message: data.message });
-    } catch (error) {
-      setSubmissionResult({ success: false, message: (error as { message: string }).message });
-    }
+    const response = await editFlashcard(formData);
+    setSubmissionResult(response);
   };
 
   return (
     <form
+      // @ts-expect-error actionの不要なタイプエラー
       // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      onSubmit={handleSubmit(onSubmit)}
+      action={handleSubmit(onSubmit)}
     >
       <div>
         <ControlledTextField<FormValues>
