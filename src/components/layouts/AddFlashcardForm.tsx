@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { addFlashcard } from "@/utils/server-actions/add-flashcard";
 import Button from "../elements/Button";
 import ControlledTextField from "../elements/ControlledTextField";
-import Message from "../elements/Message";
+import ValidationMessage from "../elements/ValidationMessage";
 
 type FormValues = { title: string };
 
@@ -48,13 +48,13 @@ const AddFlashcardForm: FC = () => {
             maxLength: { value: 20, message: "20文字以内で記入してください" },
           }}
         />
-        <Message type="error" text={errors.title?.message} />
+        <ValidationMessage type="error" text={errors.title?.message} />
       </div>
 
       <div className="mt-[32px] text-center">
         <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
         {submissionResult && (
-          <Message
+          <ValidationMessage
             type={submissionResult.success ? "success" : "error"}
             text={submissionResult.message}
           />
