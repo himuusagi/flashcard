@@ -1,18 +1,15 @@
-import { type FC, type MouseEventHandler } from "react";
+import { type FC } from "react";
+import { useFlashcardContext } from "@/contexts/FlashcardContext";
 import EllipsisButton from "../elements/EllipsisButton";
 import Button from "../elements/Button";
 
-type Props = {
-  flashcardId: number;
-  title: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-};
+const CardTopMenu: FC = () => {
+  const { flashcardId, title, switchContent } = useFlashcardContext();
 
-const CardTopMenu: FC<Props> = ({ flashcardId, title, onClick }) => {
   return (
     <div className="relative px-[30px] py-[40px]">
       <div className="absolute right-[8px] top-[8px]">
-        <EllipsisButton onClick={onClick} />
+        <EllipsisButton onClick={switchContent} />
       </div>
 
       <h2 className="text-center text-xl text-primary">{title}</h2>
