@@ -1,4 +1,5 @@
-import { type FC, type MouseEventHandler, type Dispatch, type SetStateAction } from "react";
+import { type FC } from "react";
+import { useFlashcardContext } from "@/contexts/FlashcardContext";
 import CloseButton from "../elements/CloseButton";
 import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
@@ -6,27 +7,14 @@ import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 import { moveFlashcardForward } from "@/utils/server-actions/move-flashcard-forward";
 import { moveFlashcardBackward } from "@/utils/server-actions/move-flashcard-backward";
 
-type Props = {
-  flashcardId: number;
-  title: string;
-  isFirst: boolean;
-  isLast: boolean;
-  setContentType: Dispatch<SetStateAction<"top" | "edit">>;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-};
+const CardEditMenu: FC = () => {
+  const { flashcardId, title, isFirst, isLast, setContentType, switchContent } =
+    useFlashcardContext();
 
-const CardEditMenu: FC<Props> = ({
-  flashcardId,
-  title,
-  isFirst,
-  isLast,
-  setContentType,
-  onClick,
-}) => {
   return (
     <div className="relative px-[30px] py-[16px]">
       <div className="absolute right-[8px] top-[8px]">
-        <CloseButton onClick={onClick} />
+        <CloseButton onClick={switchContent} />
       </div>
 
       <h2 className="text-center text-primary">{title}</h2>
