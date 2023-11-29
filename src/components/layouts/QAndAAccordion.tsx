@@ -1,15 +1,11 @@
 "use client";
 
-import { type FC, type ReactNode, type Dispatch, type SetStateAction } from "react";
+import { type FC, type ReactNode } from "react";
+import { useQAndAContext } from "@/contexts/QAndAContext";
 
-type Props = {
-  questionText: string;
-  answerText: string;
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
+const QAndAAccordion: FC = () => {
+  const { questionText, answerText, isOpen, setIsOpen } = useQAndAContext();
 
-const QAndAAccordion: FC<Props> = ({ questionText, answerText, isOpen, setIsOpen }) => {
   const lineBrokenQuestionTexts: ReactNode[] = [];
   questionText.split(/\n/).forEach((text, index) => {
     if (index !== 0) {

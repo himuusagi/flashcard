@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FC } from "react";
+import QAndAProvider from "@/contexts/QAndAContext";
 import Arrow from "@/components/elements/Arrow";
 import CardWithoutTitle from "@/components/layouts/BoxWithoutTitle";
 import CloseButton from "../elements/CloseButton";
@@ -26,43 +27,45 @@ const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText, isF
   };
 
   return (
-    <div>
-      <CardWithoutTitle>
-        <div className="flex justify-between">
-          {contentType === "q&a" ? (
-            <QAndAAccordion
-              questionText={questionText}
-              answerText={answerText}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-            />
-          ) : (
-            <div className="mx-auto">
-              <QAndAEditMenuList
-                flashcardId={flashcardId}
-                qaId={qaId}
-                isFirst={isFirst}
-                isLast={isLast}
-                setContentType={setContentType}
-              />
-            </div>
-          )}
-
-          <div className="ml-[12px]">
+    <QAndAProvider
+      flashcardId={flashcardId}
+      qaId={qaId}
+      questionText={questionText}
+      answerText={answerText}
+      isFirst={isFirst}
+      isLast={isLast}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
+      contentType={contentType}
+      setContentType={setContentType}
+    >
+      <div>
+        <CardWithoutTitle>
+          <div className="flex justify-between">
             {contentType === "q&a" ? (
-              <div className="flex items-center">
-                <EllipsisButton size="small" onClick={switchContentType} />
-                <Arrow direction={isOpen ? "up" : "down"} className="ml-[12px]" />
-              </div>
+              <QAndAAccordion />
             ) : (
-              <div className="flex pr-[24px]">
-                <CloseButton size="small" onClick={switchContentType} />
+              <div className="mx-auto">
+                <QAndAEditMenuList />
               </div>
             )}
+
+            <div className="ml-[12px]">
+              {contentType === "q&a" ? (
+                <div className="flex items-center">
+                  <EllipsisButton size="small" onClick={switchContentType} />
+                  <Arrow direction={isOpen ? "up" : "down"} className="ml-[12px]" />
+                </div>
+              ) : (
+                <div className="flex pr-[24px]">
+                  <CloseButton size="small" onClick={switchContentType} />
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </CardWithoutTitle>
-    </div>
+        </CardWithoutTitle>
+      </div>
+    </QAndAProvider>
   );
 };
 
