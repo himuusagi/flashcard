@@ -1,19 +1,14 @@
-import { type FC, type Dispatch, type SetStateAction } from "react";
+import { type FC } from "react";
 import { deleteQuestionAnswer } from "@/utils/server-actions/delete-question-answer";
 import { moveQABackward } from "@/utils/server-actions/move-qa-backward";
 import { moveQAForward } from "@/utils/server-actions/move-qa-forward";
 import ClickableText from "../elements/ClickableText";
 import LinkedText from "../elements/LinkedText";
+import { useQAndAContext } from "@/contexts/QAndAContext";
 
-type Props = {
-  flashcardId: number;
-  qaId: number;
-  isFirst: boolean;
-  isLast: boolean;
-  setContentType: Dispatch<SetStateAction<"q&a" | "edit">>;
-};
+const QAndAEditMenuList: FC = () => {
+  const { flashcardId, qaId, isFirst, isLast, setContentType } = useQAndAContext();
 
-const QAndAEditMenuList: FC<Props> = ({ flashcardId, qaId, isFirst, isLast, setContentType }) => {
   return (
     <form>
       <ul>
