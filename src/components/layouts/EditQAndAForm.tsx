@@ -2,10 +2,10 @@
 
 import { useState, type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { editQA } from "@/utils/server-actions/edit-qa";
 import Button from "../elements/Button";
 import ControlledTextArea from "../elements/ControlledTextArea";
-import Message from "../elements/Message";
-import { editQA } from "@/utils/server-actions/edit-qa";
+import ValidationMessage from "../elements/ValidationMessage";
 
 type FormValues = { flashcardId: number; qaId: number; question: string; answer: string };
 
@@ -47,7 +47,7 @@ const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
             maxLength: { value: 200, message: "200文字以内で記入してください" },
           }}
         />
-        <Message type="error" text={errors.question?.message} />
+        <ValidationMessage type="error" text={errors.question?.message} />
       </div>
 
       <div className="mt-[32px]">
@@ -61,7 +61,7 @@ const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
             maxLength: { value: 400, message: "400文字以内で記入してください" },
           }}
         />
-        <Message type="error" text={errors.answer?.message} />
+        <ValidationMessage type="error" text={errors.answer?.message} />
       </div>
 
       <input {...register("flashcardId")} type="hidden" />
@@ -70,7 +70,7 @@ const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
       <div className="mt-[32px] text-center">
         <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
         {submissionResult && (
-          <Message
+          <ValidationMessage
             type={submissionResult.success ? "success" : "error"}
             text={submissionResult.message}
           />
