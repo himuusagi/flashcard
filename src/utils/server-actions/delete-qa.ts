@@ -1,28 +1,36 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
+import { getUserId } from "../get-user-id";
 
-export const deleteQuestionAnswer = async (flashcardId: number, qaId: number) => {
-  const session = await getServerSession();
-  const userId = session?.user?.email;
-  if (!userId) {
-    throw new Error("認証が必要なため、リクエストが拒否されました");
+export const deleteQA = async (
+  flashcardId: number,
+  qaId: number
+): Promise<{ success: boolean; message: string }> => {
+  try {
+    const userId = await getUserId();
+    if (!userId) {
+      return { success: false, message: "認証が必要なため、リクエストが拒否されました" };
+    }
+
+    const flashcard = await prisma.flash_Card.findUnique({ where: { userId, id: flashcardId } });
+    const qa = await prisma.question_Answer.findUnique({ where: { id: qaId } });
+    if (!flashcard || !qa) {
+      return { success: false, message: "リクエストしたリソースが見つかりません" };
+    }
+
+    await prisma.question_Answer.delete({ where: { id: qaId } });
+    await prisma.question_Answer.updateMany({
+      where: { flashCardId: flashcardId, order: { gte: qa.order } },
+      data: { order: { decrement: 1 } },
+    });
+    revalidatePath(`flashcards/${flashcardId}/qa`);
+    return { success: true, message: "データが削除されました" };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { success: false, message: error.message };
+    }
+    return { success: false, message: "サーバーで不明なエラーが発生しました" };
   }
-
-  const flashcard = await prisma.flash_Card.findUnique({ where: { userId, id: flashcardId } });
-  const qa = await prisma.question_Answer.findUnique({ where: { id: qaId } });
-  if (!flashcard || !qa) {
-    throw new Error("リクエストしたリソースが見つかりません");
-  }
-
-  await prisma.question_Answer.delete({ where: { id: qaId } });
-
-  revalidatePath(`flashcards/${flashcardId}/qa`);
-
-  await prisma.question_Answer.updateMany({
-    where: { flashCardId: flashcardId, order: { gte: qa.order } },
-    data: { order: { decrement: 1 } },
-  });
 };
