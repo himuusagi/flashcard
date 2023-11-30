@@ -2,12 +2,14 @@ import { type FC } from "react";
 import { deleteQA } from "@/utils/server-actions/delete-qa";
 import { moveQABackward } from "@/utils/server-actions/move-qa-backward";
 import { moveQAForward } from "@/utils/server-actions/move-qa-forward";
+import { useQAndAContext } from "@/contexts/QAndAContext";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import ClickableText from "../elements/ClickableText";
 import LinkedText from "../elements/LinkedText";
-import { useQAndAContext } from "@/contexts/QAndAContext";
 
 const QAndAEditMenuList: FC = () => {
   const { flashcardId, qaId, isFirst, isLast, setContentType } = useQAndAContext();
+  const { setIsShowing, setType, setMessage } = useSubmissionMessageContext();
 
   return (
     <form>
@@ -22,7 +24,10 @@ const QAndAEditMenuList: FC = () => {
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               formAction={async () => {
                 setContentType("q&a");
-                await moveQAForward(flashcardId, qaId);
+                const { success, message } = await moveQAForward(flashcardId, qaId);
+                setIsShowing(true);
+                setType(success ? "success" : "error");
+                setMessage(message);
               }}
             />
           )}
@@ -32,7 +37,10 @@ const QAndAEditMenuList: FC = () => {
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               formAction={async () => {
                 setContentType("q&a");
-                await moveQABackward(flashcardId, qaId);
+                const { success, message } = await moveQABackward(flashcardId, qaId);
+                setIsShowing(true);
+                setType(success ? "success" : "error");
+                setMessage(message);
               }}
               className={isFirst ? "" : "ml-[28px]"}
             />
@@ -44,7 +52,10 @@ const QAndAEditMenuList: FC = () => {
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             formAction={async () => {
               setContentType("q&a");
-              await deleteQA(flashcardId, qaId);
+              const { success, message } = await deleteQA(flashcardId, qaId);
+              setIsShowing(true);
+              setType(success ? "success" : "error");
+              setMessage(message);
             }}
           />
         </li>
