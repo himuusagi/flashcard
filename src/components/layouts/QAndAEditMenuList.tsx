@@ -1,5 +1,5 @@
 import { type FC } from "react";
-import { deleteQuestionAnswer } from "@/utils/server-actions/delete-question-answer";
+import { deleteQA } from "@/utils/server-actions/delete-qa";
 import { moveQABackward } from "@/utils/server-actions/move-qa-backward";
 import { moveQAForward } from "@/utils/server-actions/move-qa-forward";
 import ClickableText from "../elements/ClickableText";
@@ -44,7 +44,7 @@ const QAndAEditMenuList: FC = () => {
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             formAction={async () => {
               setContentType("q&a");
-              await deleteQuestionAnswer(flashcardId, qaId);
+              await deleteQA(flashcardId, qaId);
             }}
           />
         </li>

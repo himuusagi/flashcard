@@ -1,6 +1,10 @@
+"use client";
+
 import { type FC } from "react";
 import { type QA } from "@/types/data";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import QAndACard from "./QAndACard";
+import SubmissionMessage from "../elements/SubmissionMessage";
 
 type Props = {
   flashcardId: number;
@@ -8,6 +12,9 @@ type Props = {
 };
 
 const QAndACardList: FC<Props> = ({ flashcardId, qas }) => {
+  const { isShowing, setIsShowing, type, setType, message, setMessage } =
+    useSubmissionMessageContext();
+
   return (
     <ul>
       {qas.map(({ id, question, answer }, index) => {
@@ -27,6 +34,19 @@ const QAndACardList: FC<Props> = ({ flashcardId, qas }) => {
           </li>
         );
       })}
+
+      {isShowing && (
+        <div className="fixed bottom-[80px] left-1/2 -translate-x-1/2">
+          <SubmissionMessage
+            isShowing={isShowing}
+            setIsShowing={setIsShowing}
+            type={type}
+            setType={setType}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
+      )}
     </ul>
   );
 };
