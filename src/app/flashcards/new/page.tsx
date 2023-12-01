@@ -1,5 +1,6 @@
 import { type Metadata, type NextPage } from "next";
 import { getUserId } from "@/utils/get-user-id";
+import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import AddFlashcardForm from "@/components/layouts/AddFlashcardForm";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import Heading1 from "@/components/elements/Heading1";
@@ -22,7 +23,9 @@ const Page: NextPage = async () => {
 
       <Inner width="narrow">
         <ContentWrapper>
-          <AddFlashcardForm />
+          <SubmissionMessageProvider>
+            <AddFlashcardForm />
+          </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
     </Main>
