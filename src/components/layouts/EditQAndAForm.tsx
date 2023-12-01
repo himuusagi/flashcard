@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { type FC } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { editQA } from "@/utils/server-actions/edit-qa";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import Button from "../elements/Button";
 import ControlledTextArea from "../elements/ControlledTextArea";
+import SubmissionMessage from "../elements/SubmissionMessage";
 import ValidationMessage from "../elements/ValidationMessage";
 
 type FormValues = { flashcardId: number; qaId: number; question: string; answer: string };
@@ -12,10 +14,8 @@ type FormValues = { flashcardId: number; qaId: number; question: string; answer:
 type Props = { flashcardId: number; qaId: number; question: string; answer: string };
 
 const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
-  const [submissionResult, setSubmissionResult] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
+  const { isShowing, setIsShowing, type, setType, message, setMessage } =
+    useSubmissionMessageContext();
 
   const {
     register,
@@ -25,9 +25,10 @@ const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
   } = useForm<FormValues>({ defaultValues: { flashcardId, qaId, question, answer } });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-    setSubmissionResult(null);
-    const response = await editQA(formData);
-    setSubmissionResult(response);
+    const { success, message } = await editQA(formData);
+    setIsShowing(true);
+    setType(success ? "success" : "error");
+    setMessage(message);
   };
 
   return (
@@ -69,13 +70,20 @@ const EditQAndAForm: FC<Props> = ({ flashcardId, qaId, question, answer }) => {
 
       <div className="mt-[32px] text-center">
         <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
-        {submissionResult && (
-          <ValidationMessage
-            type={submissionResult.success ? "success" : "error"}
-            text={submissionResult.message}
-          />
-        )}
       </div>
+
+      {isShowing && (
+        <div className="mt-8 text-center">
+          <SubmissionMessage
+            isShowing={isShowing}
+            setIsShowing={setIsShowing}
+            type={type}
+            setType={setType}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
+      )}
     </form>
   );
 };
