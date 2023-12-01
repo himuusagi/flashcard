@@ -1,14 +1,28 @@
 "use client";
 
-import { type FC } from "react";
+import { useEffect, type FC, type Dispatch, type SetStateAction } from "react";
 
 type Props = {
-  type: "success" | "error";
-  text: string | undefined;
+  isShowing: boolean;
+  setIsShowing: Dispatch<SetStateAction<boolean>>;
+  type: "success" | "error" | undefined;
+  setType: Dispatch<SetStateAction<"success" | "error" | undefined>>;
+  message: string | undefined;
+  setMessage: Dispatch<SetStateAction<string | undefined>>;
 };
 
-const Message: FC<Props> = ({ type, text }) => {
-  if (!text) {
+const Message: FC<Props> = ({ isShowing, setIsShowing, type, setType, message, setMessage }) => {
+  useEffect(() => {
+    if (isShowing) {
+      setTimeout(() => {
+        setIsShowing(false);
+        setType(undefined);
+        setMessage(undefined);
+      }, 5000);
+    }
+  }, [isShowing, setIsShowing, setType, setMessage]);
+
+  if (!isShowing) {
     return null;
   }
 
@@ -35,12 +49,16 @@ const Message: FC<Props> = ({ type, text }) => {
       styleOfButtonHoverColor = "group-hover:bg-accent-light";
       styleOfIconLeft = "left-1/2 top-1/2 w-[12px] -translate-x-1/2";
       styleOfIconRight = "left-1/2 top-1/2 w-[12px] -translate-x-1/2";
+      break;
+    }
+    default: {
+      throw new Error("isShowingプロップス が false である必要があります");
     }
   }
 
   return (
     <div
-      className={`mt-2 inline-flex items-center rounded border-2 ${styleOfBorderColor} px-[8px] py-[4px]`}
+      className={`inline-flex items-center rounded border-2 bg-white ${styleOfBorderColor} px-[8px] py-[4px]`}
     >
       <div className={`relative aspect-square w-[20px] rounded-full ${styleOfIconColor}`}>
         <span
@@ -51,12 +69,16 @@ const Message: FC<Props> = ({ type, text }) => {
         />
       </div>
 
-      <span className={`ml-[8px] text-sm text-gray-dark`}>{text}</span>
+      <span className={`ml-[8px] text-sm text-gray-dark`}>{message}</span>
 
       <span className="ml-[8px] inline-block h-[24px] w-[1px] rounded bg-gray-light" />
 
       <button
-        onClick={() => {}}
+        onClick={() => {
+          setIsShowing(false);
+          setType(undefined);
+          setMessage(undefined);
+        }}
         className={`group relative ml-[8px] aspect-square w-[20px] cursor-pointer ${styleOfButtonFocusColor}`}
       >
         <span

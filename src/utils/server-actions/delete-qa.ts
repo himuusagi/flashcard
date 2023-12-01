@@ -1,10 +1,10 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { getUserId } from "../get-user-id";
 
-export const moveQABackward = async (
+export const deleteQA = async (
   flashcardId: number,
   qaId: number
 ): Promise<{ success: boolean; message: string }> => {
@@ -20,20 +20,13 @@ export const moveQABackward = async (
       return { success: false, message: "リクエストしたリソースが見つかりません" };
     }
 
-    const qaCount = await prisma.question_Answer.count();
-    const isLast = qa.order === qaCount;
-    if (isLast) {
-      return { success: false, message: "不正なリクエストです" };
-    }
-
-    await prisma.question_Answer.update({ where: { id: qaId }, data: { order: 0 } });
+    await prisma.question_Answer.delete({ where: { id: qaId } });
     await prisma.question_Answer.updateMany({
-      where: { flashCardId: flashcardId, order: qa.order + 1 },
+      where: { flashCardId: flashcardId, order: { gte: qa.order } },
       data: { order: { decrement: 1 } },
     });
-    await prisma.question_Answer.update({ where: { id: qaId }, data: { order: qa.order + 1 } });
-    revalidatePath(`/flashcards/${flashcardId}/qa`);
-    return { success: true, message: "データの順番が更新されました" };
+    revalidatePath(`flashcards/${flashcardId}/qa`);
+    return { success: true, message: "データが削除されました" };
   } catch (error) {
     if (error instanceof Error) {
       return { success: false, message: error.message };

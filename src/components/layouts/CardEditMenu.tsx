@@ -1,15 +1,17 @@
 import { type FC } from "react";
-import { useFlashcardContext } from "@/contexts/FlashcardContext";
-import CloseButton from "../elements/CloseButton";
-import LinkedText from "../elements/LinkedText";
-import ClickableText from "../elements/ClickableText";
 import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 import { moveFlashcardForward } from "@/utils/server-actions/move-flashcard-forward";
 import { moveFlashcardBackward } from "@/utils/server-actions/move-flashcard-backward";
+import { useFlashcardContext } from "@/contexts/FlashcardContext";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
+import CloseButton from "../elements/CloseButton";
+import LinkedText from "../elements/LinkedText";
+import ClickableText from "../elements/ClickableText";
 
 const CardEditMenu: FC = () => {
   const { flashcardId, title, isFirst, isLast, setContentType, switchContent } =
     useFlashcardContext();
+  const { setIsShowing, setType, setMessage } = useSubmissionMessageContext();
 
   return (
     <div className="relative px-[30px] py-[16px]">
@@ -40,7 +42,10 @@ const CardEditMenu: FC = () => {
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
                     setContentType("top");
-                    await moveFlashcardForward(flashcardId);
+                    const { success, message } = await moveFlashcardForward(flashcardId);
+                    setIsShowing(true);
+                    setType(success ? "success" : "error");
+                    setMessage(message);
                   }}
                 />
               )}
@@ -50,7 +55,10 @@ const CardEditMenu: FC = () => {
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
                     setContentType("top");
-                    await moveFlashcardBackward(flashcardId);
+                    const { success, message } = await moveFlashcardBackward(flashcardId);
+                    setIsShowing(true);
+                    setType(success ? "success" : "error");
+                    setMessage(message);
                   }}
                   className={isFirst ? "" : "ml-4"}
                 />
@@ -62,7 +70,10 @@ const CardEditMenu: FC = () => {
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 formAction={async () => {
                   setContentType("top");
-                  await deleteFlashcard(flashcardId);
+                  const { success, message } = await deleteFlashcard(flashcardId);
+                  setIsShowing(true);
+                  setType(success ? "success" : "error");
+                  setMessage(message);
                 }}
               />
             </li>

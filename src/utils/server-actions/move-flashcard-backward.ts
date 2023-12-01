@@ -1,36 +1,41 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
+import { getUserId } from "../get-user-id";
 
-export const moveFlashcardBackward = async (id: number) => {
-  const session = await getServerSession();
-  const userId = session?.user?.email;
-  if (!userId) {
-    throw new Error("認証が必要なため、リクエストが拒否されました");
+export const moveFlashcardBackward = async (
+  id: number
+): Promise<{ success: boolean; message: string }> => {
+  try {
+    const userId = await getUserId();
+    if (!userId) {
+      return { success: false, message: "認証が必要なため、リクエストが拒否されました" };
+    }
+
+    const flashcard = await prisma.flash_Card.findUnique({ where: { userId, id } });
+    if (!flashcard) {
+      return { success: false, message: "リクエストしたリソースが見つかりません" };
+    }
+
+    const flashcardCount = await prisma.flash_Card.count({ where: { userId } });
+    const isLast = flashcard.order === flashcardCount;
+    if (isLast) {
+      return { success: false, message: "不正なリクエストです" };
+    }
+
+    await prisma.flash_Card.update({ where: { id }, data: { order: 0 } });
+    await prisma.flash_Card.updateMany({
+      where: { userId, order: flashcard.order + 1 },
+      data: { order: { decrement: 1 } },
+    });
+    await prisma.flash_Card.update({ where: { id }, data: { order: flashcard.order + 1 } });
+    revalidatePath("/");
+    return { success: true, message: "データの順番が更新されました" };
+  } catch (error) {
+    if (error instanceof Error) {
+      return { success: false, message: error.message };
+    }
+    return { success: false, message: "サーバーで不明なエラーが発生しました" };
   }
-
-  const flashcard = await prisma.flash_Card.findUnique({ where: { userId, id } });
-  if (!flashcard) {
-    throw new Error("アクセスが禁止されているため、リクエストが拒否されました");
-  }
-
-  const flashcardCount = await prisma.flash_Card.count({ where: { userId } });
-  const isLast = flashcard.order === flashcardCount;
-  if (isLast) {
-    throw new Error("不正なリクエストです");
-  }
-
-  // 該当カードの order を0に
-  await prisma.flash_Card.update({ where: { id }, data: { order: 0 } });
-  // 該当カードの次のカードを "order" に
-  await prisma.flash_Card.updateMany({
-    where: { userId, order: flashcard.order + 1 },
-    data: { order: { decrement: 1 } },
-  });
-  // 該当カードの order を "order + 1" に
-  await prisma.flash_Card.update({ where: { id }, data: { order: flashcard.order + 1 } });
-
-  revalidatePath("/");
 };

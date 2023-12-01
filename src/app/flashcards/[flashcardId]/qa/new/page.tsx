@@ -1,21 +1,25 @@
-import { type NextPage } from "next";
+import { type NextPage, type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
+import { getUserId } from "@/utils/get-user-id";
+import AddQAndAForm from "@/components/layouts/AddQAndAForm";
+import ContentWrapper from "@/components/layouts/ContentWrapper";
 import Heading1 from "@/components/elements/Heading1";
-import Main from "@/components/layouts/Main";
 import Heading2 from "@/components/elements/Heading2";
 import Inner from "@/components/layouts/Inner";
-import ContentWrapper from "@/components/layouts/ContentWrapper";
-import AddQAndAForm from "@/components/layouts/AddQAndAForm";
+import Main from "@/components/layouts/Main";
+import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
+
+export const metadata: Metadata = {
+  title: "問題の追加",
+};
 
 type Props = {
   params: { flashcardId: string };
 };
 
 const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
-  const session = await getServerSession();
-  const userId = session?.user?.email;
+  const userId = await getUserId();
   if (!userId) {
     throw new Error("認証が必要なため、リクエストが拒否されました");
   }
@@ -35,7 +39,9 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
 
       <Inner width="narrow">
         <ContentWrapper>
-          <AddQAndAForm flashcardId={flashcard.id} />
+          <SubmissionMessageProvider>
+            <AddQAndAForm flashcardId={flashcard.id} />
+          </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
     </Main>

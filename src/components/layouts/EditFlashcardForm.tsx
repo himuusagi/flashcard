@@ -1,10 +1,12 @@
 "use client";
 
-import { type FC, useState } from "react";
+import { type FC } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { editFlashcard } from "@/utils/server-actions/edit-flashcard";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import Button from "../elements/Button";
 import ControlledTextField from "../elements/ControlledTextField";
+import SubmissionMessage from "../elements/SubmissionMessage";
 import ValidationMessage from "../elements/ValidationMessage";
 
 type FormValues = { id: number; title: string };
@@ -15,10 +17,8 @@ type Props = {
 };
 
 const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
-  const [submissionResult, setSubmissionResult] = useState<{
-    success: boolean;
-    message: string;
-  } | null>(null);
+  const { isShowing, setIsShowing, type, setType, message, setMessage } =
+    useSubmissionMessageContext();
 
   const {
     register,
@@ -28,9 +28,10 @@ const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
   } = useForm<FormValues>({ defaultValues: { id: flashcardId, title: flashcardTitle } });
 
   const onSubmit: SubmitHandler<FormValues> = async (formData) => {
-    setSubmissionResult(null);
-    const response = await editFlashcard(formData);
-    setSubmissionResult(response);
+    const { success, message } = await editFlashcard(formData);
+    setIsShowing(true);
+    setType(success ? "success" : "error");
+    setMessage(message);
   };
 
   return (
@@ -58,13 +59,20 @@ const EditFlashcardForm: FC<Props> = ({ flashcardId, flashcardTitle }) => {
 
       <div className="mt-[32px] text-center">
         <Button type="submit" disabled={isSubmitting} text={isSubmitting ? "送信中" : "送信"} />
-        {submissionResult && (
-          <ValidationMessage
-            type={submissionResult.success ? "success" : "error"}
-            text={submissionResult.message}
-          />
-        )}
       </div>
+
+      {isShowing && (
+        <div className="mt-8 text-center">
+          <SubmissionMessage
+            isShowing={isShowing}
+            setIsShowing={setIsShowing}
+            type={type}
+            setType={setType}
+            message={message}
+            setMessage={setMessage}
+          />
+        </div>
+      )}
     </form>
   );
 };

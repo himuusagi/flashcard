@@ -1,18 +1,22 @@
-import { type NextPage } from "next";
+import { type NextPage, type Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
-import Main from "@/components/layouts/Main";
-import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
+import { getUserId } from "@/utils/get-user-id";
+import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EditFlashcardForm from "@/components/layouts/EditFlashcardForm";
+import Heading1 from "@/components/elements/Heading1";
+import Inner from "@/components/layouts/Inner";
+import Main from "@/components/layouts/Main";
+
+export const metadata: Metadata = {
+  title: "単語帳の編集",
+};
 
 const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { flashcardId } }) => {
-  const session = await getServerSession();
-  const userId = session?.user?.email;
+  const userId = await getUserId();
   if (!userId) {
-    throw new Error("ユーザー情報が取得できませんでした");
+    throw new Error("認証が必要なため、リクエストが拒否されました");
   }
 
   const flashcard = await prisma.flash_Card.findUnique({
@@ -26,9 +30,12 @@ const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { f
   return (
     <Main>
       <Heading1 title="単語帳の編集" />
+
       <Inner width="narrow">
         <ContentWrapper>
-          <EditFlashcardForm flashcardId={Number(flashcardId)} flashcardTitle={flashcard.title} />
+          <SubmissionMessageProvider>
+            <EditFlashcardForm flashcardId={Number(flashcardId)} flashcardTitle={flashcard.title} />
+          </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
     </Main>
