@@ -14,7 +14,7 @@ type Props = {
 
 const Button: FC<Props> = ({
   type,
-  href = "",
+  href,
   size = "medium",
   color = "primary",
   text,
@@ -57,6 +57,10 @@ const Button: FC<Props> = ({
   }
 
   if (type === "link") {
+    if (!href) {
+      throw new Error("href に文字列を設定する必要があります");
+    }
+
     return (
       <Link
         href={href}
