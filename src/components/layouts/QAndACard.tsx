@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { useState, useEffect, type FC } from "react";
 import QAndAProvider from "@/contexts/QAndAContext";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import Arrow from "@/components/elements/Arrow";
 import CardWithoutTitle from "@/components/layouts/BoxWithoutTitle";
 import CloseButton from "../elements/CloseButton";
@@ -21,6 +22,12 @@ type Props = {
 const QAndACard: FC<Props> = ({ flashcardId, qaId, questionText, answerText, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"q&a" | "edit">("q&a");
   const [isOpen, setIsOpen] = useState(false);
+
+  const { type } = useSubmissionMessageContext();
+
+  useEffect(() => {
+    setContentType("q&a");
+  }, [type]);
 
   const switchContentType = () => {
     setContentType((prev) => (prev === "q&a" ? "edit" : "q&a"));
