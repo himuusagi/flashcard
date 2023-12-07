@@ -1,4 +1,6 @@
-import { type FC, type MouseEventHandler } from "react";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
+import { useEffect, type FC, type MouseEventHandler } from "react";
+import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 type Props = {
   text: string;
@@ -8,6 +10,22 @@ type Props = {
 };
 
 const ClickableText: FC<Props> = ({ text, onClick, formAction, className }) => {
+  const { setIsShowing, setType, setMessage } = useSubmissionMessageContext();
+
+  const { pending } = useFormStatus();
+
+  useEffect(() => {
+    if (pending) {
+      setIsShowing(true);
+      setType("pending");
+      setMessage("処理中");
+    } else {
+      setIsShowing(false);
+      setType(undefined);
+      setMessage(undefined);
+    }
+  }, [pending, setIsShowing, setType, setMessage]);
+
   return (
     <button
       type="submit"

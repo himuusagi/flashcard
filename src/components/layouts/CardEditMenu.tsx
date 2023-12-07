@@ -1,3 +1,5 @@
+"use client";
+
 import { type FC } from "react";
 import { deleteFlashcard } from "@/utils/server-actions/delete-flashcard";
 import { moveFlashcardForward } from "@/utils/server-actions/move-flashcard-forward";
