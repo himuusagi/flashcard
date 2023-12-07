@@ -8,7 +8,7 @@ import ClickableText from "../elements/ClickableText";
 import LinkedText from "../elements/LinkedText";
 
 const QAndAEditMenuList: FC = () => {
-  const { flashcardId, qaId, isFirst, isLast, setContentType } = useQAndAContext();
+  const { flashcardId, qaId, isFirst, isLast } = useQAndAContext();
   const { setIsShowing, setType, setMessage } = useSubmissionMessageContext();
 
   return (
@@ -23,7 +23,6 @@ const QAndAEditMenuList: FC = () => {
               text="順番を前へ"
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               formAction={async () => {
-                setContentType("q&a");
                 const { success, message } = await moveQAForward(flashcardId, qaId);
                 setIsShowing(true);
                 setType(success ? "success" : "error");
@@ -36,7 +35,6 @@ const QAndAEditMenuList: FC = () => {
               text="順番を後ろへ"
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               formAction={async () => {
-                setContentType("q&a");
                 const { success, message } = await moveQABackward(flashcardId, qaId);
                 setIsShowing(true);
                 setType(success ? "success" : "error");
@@ -51,7 +49,6 @@ const QAndAEditMenuList: FC = () => {
             text="削除"
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             formAction={async () => {
-              setContentType("q&a");
               const { success, message } = await deleteQA(flashcardId, qaId);
               setIsShowing(true);
               setType(success ? "success" : "error");
