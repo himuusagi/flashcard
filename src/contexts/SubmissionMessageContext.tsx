@@ -13,8 +13,8 @@ import {
 type SubmissionMessageContextType = {
   isShowing: boolean;
   setIsShowing: Dispatch<SetStateAction<boolean>>;
-  type: "success" | "error" | undefined;
-  setType: Dispatch<SetStateAction<"success" | "error" | undefined>>;
+  type: "success" | "pending" | "error" | undefined;
+  setType: Dispatch<SetStateAction<"success" | "pending" | "error" | undefined>>;
   message: string | undefined;
   setMessage: Dispatch<SetStateAction<string | undefined>>;
 };
@@ -35,7 +35,7 @@ type Props = { children: ReactNode };
 
 const SubmissionMessageProvider: FC<Props> = ({ children }) => {
   const [isShowing, setIsShowing] = useState<boolean>(false);
-  const [type, setType] = useState<"success" | "error" | undefined>(undefined);
+  const [type, setType] = useState<"success" | "pending" | "error" | undefined>(undefined);
   const [message, setMessage] = useState<string | undefined>(undefined);
 
   return (

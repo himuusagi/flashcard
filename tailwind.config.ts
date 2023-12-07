@@ -18,6 +18,20 @@ const config: Config = {
         gray: { light: "#CCCCCC", DEFAULT: "#7E7E7E", dark: "#5E5D5D" },
         accent: { light: "#fb885f", DEFAULT: "#F24405" },
       },
+
+      animation: {
+        spin: "spin 1s linear infinite both",
+      },
+      keyframes: {
+        spin: {
+          "0%": {
+            transform: "rotate(0)",
+          },
+          to: {
+            transform: "rotate(360deg)",
+          },
+        },
+      },
     },
   },
   plugins: [],
