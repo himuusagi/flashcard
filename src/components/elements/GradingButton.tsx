@@ -5,31 +5,17 @@ import { type FC, type MouseEventHandler } from "react";
 type Props = {
   text: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  correction: "correct" | "incorrect";
   className?: string;
-  icon: "correct" | "wrong";
-  size?: "medium" | "small";
-  color?: "primary" | "gray";
 };
 
-const ButtonWithIcon: FC<Props> = ({ text, onClick, className, size, color, icon }) => {
-  let styleOfSize = "";
-  switch (size) {
-    case "medium":
-      styleOfSize = "min-w-[200px] px-[40px] py-[4px] text-xl";
-      break;
-    case "small":
-      styleOfSize = "small min-w-[160px] px-[20px] py-[6px] text-sm";
-      break;
-    default:
-      styleOfSize = "min-w-[200px] px-[40px] py-[4px] text-xl";
-  }
-
+const GradingButton: FC<Props> = ({ text, onClick, className, correction }) => {
   let styleOfColor = "";
-  switch (color) {
-    case "primary":
+  switch (correction) {
+    case "correct":
       styleOfColor = "border-primary hover:bg-primary text-primary hover:text-white";
       break;
-    case "gray":
+    case "incorrect":
       styleOfColor = "border-gray hover:bg-gray text-gray hover:text-white";
       break;
     default:
@@ -49,7 +35,7 @@ const ButtonWithIcon: FC<Props> = ({ text, onClick, className, size, color, icon
     </svg>
   );
 
-  const wrongIcon = (
+  const incorrectIcon = (
     <svg
       width="14"
       height="14"
@@ -64,14 +50,14 @@ const ButtonWithIcon: FC<Props> = ({ text, onClick, className, size, color, icon
 
   return (
     <button
-      type="button"
+      type="submit"
       onClick={onClick}
-      className={`group inline-flex items-center justify-center rounded-[4px] border text-center  outline-none duration-100 focus:shadow focus:shadow-primary hover:[&_line]:stroke-primary ${styleOfSize} ${styleOfColor} ${className}`}
+      className={`group inline-flex min-w-[200px] items-center justify-center rounded-[4px] border  px-[40px] py-[4px] text-center text-xl outline-none duration-100 focus:shadow focus:shadow-primary hover:[&_line]:stroke-primary ${styleOfColor} ${className}`}
     >
-      {icon === "correct" ? correctIcon : wrongIcon}
+      {correction === "correct" ? correctIcon : incorrectIcon}
       <span className="ml-[8px]">{text}</span>
     </button>
   );
 };
 
-export default ButtonWithIcon;
+export default GradingButton;

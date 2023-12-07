@@ -15,7 +15,7 @@ const CardTopMenu: FC = () => {
       <h2 className="text-center text-xl text-primary">{title}</h2>
 
       <div className="mt-8 text-center">
-        <Button type="link" text="テストする" href={`/flashcards/${flashcardId}`} />
+        <Button type="link" text="テストする" href={`/flashcards/${flashcardId}/test`} />
       </div>
     </div>
   );
