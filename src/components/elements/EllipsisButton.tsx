@@ -1,4 +1,5 @@
 import { type FC, type MouseEventHandler } from "react";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 
 type Props = {
   size?: "medium" | "small";
@@ -7,6 +8,8 @@ type Props = {
 };
 
 const EllipsisButton: FC<Props> = ({ size, onClick, className }) => {
+  const { type } = useSubmissionMessageContext();
+
   let styleOfCircleSize = "";
   let styleOfDotSize = "";
   switch (size) {
@@ -26,16 +29,17 @@ const EllipsisButton: FC<Props> = ({ size, onClick, className }) => {
   return (
     <button
       onClick={onClick}
-      className={`group relative rounded-full border border-primary duration-100 before:block before:pt-[100%] hover:bg-primary focus:outline-primary-dark ${className} ${styleOfCircleSize}`}
+      disabled={type === "pending"}
+      className={`group relative rounded-full border border-primary duration-100 before:block before:pt-[100%] hover:bg-primary focus:outline-primary-dark disabled:pointer-events-none disabled:border-primary-light ${className} ${styleOfCircleSize}`}
     >
       <span
-        className={`absolute left-[25%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white ${styleOfDotSize}`}
+        className={`absolute left-[25%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white group-disabled:bg-primary-light ${styleOfDotSize}`}
       />
       <span
-        className={`absolute left-[50%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white ${styleOfDotSize}`}
+        className={`absolute left-[50%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white group-disabled:bg-primary-light ${styleOfDotSize}`}
       />
       <span
-        className={`absolute left-[75%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white ${styleOfDotSize}`}
+        className={`absolute left-[75%] top-[50%] block -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary duration-100 before:block before:pt-[100%] group-hover:bg-white group-disabled:bg-primary-light ${styleOfDotSize}`}
       />
     </button>
   );
