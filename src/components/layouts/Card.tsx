@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, type FC } from "react";
+import { useState, useEffect, type FC } from "react";
 import FlashcardProvider from "@/contexts/FlashcardContext";
+import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import CardTopMenu from "./CardTopMenu";
 import CardEditMenu from "./CardEditMenu";
 
@@ -14,6 +15,10 @@ type Props = {
 
 const Card: FC<Props> = ({ flashcardId, title, isFirst, isLast }) => {
   const [contentType, setContentType] = useState<"top" | "edit">("top");
+
+  const { type } = useSubmissionMessageContext();
+
+  useEffect(() => setContentType("top"), [type]);
 
   const switchContent = () => {
     setContentType((prev) => (prev === "top" ? "edit" : "top"));

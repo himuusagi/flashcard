@@ -11,8 +11,7 @@ import LinkedText from "../elements/LinkedText";
 import ClickableText from "../elements/ClickableText";
 
 const CardEditMenu: FC = () => {
-  const { flashcardId, title, isFirst, isLast, setContentType, switchContent } =
-    useFlashcardContext();
+  const { flashcardId, title, isFirst, isLast, switchContent } = useFlashcardContext();
   const { setIsShowing, setType, setMessage } = useSubmissionMessageContext();
 
   return (
@@ -43,7 +42,6 @@ const CardEditMenu: FC = () => {
                   text="順番を前へ"
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
-                    setContentType("top");
                     const { success, message } = await moveFlashcardForward(flashcardId);
                     setIsShowing(true);
                     setType(success ? "success" : "error");
@@ -56,7 +54,6 @@ const CardEditMenu: FC = () => {
                   text="順番を後ろへ"
                   // eslint-disable-next-line @typescript-eslint/no-misused-promises
                   formAction={async () => {
-                    setContentType("top");
                     const { success, message } = await moveFlashcardBackward(flashcardId);
                     setIsShowing(true);
                     setType(success ? "success" : "error");
@@ -71,7 +68,6 @@ const CardEditMenu: FC = () => {
                 text="削除"
                 // eslint-disable-next-line @typescript-eslint/no-misused-promises
                 formAction={async () => {
-                  setContentType("top");
                   const { success, message } = await deleteFlashcard(flashcardId);
                   setIsShowing(true);
                   setType(success ? "success" : "error");
