@@ -11,7 +11,7 @@ import Main from "@/components/layouts/Main";
 const Page: NextPage = async () => {
   const userId = await getUserId();
   if (!userId) {
-    throw new Error("ユーザー情報が取得できませんでした");
+    throw new Error("認証が必要なため、リクエストが拒否されました");
   }
 
   const flashcards = await prisma.flash_Card.findMany({
