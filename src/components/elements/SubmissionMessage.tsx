@@ -95,7 +95,7 @@ const SubmissionMessage: FC<Props> = ({
 
   return (
     <div
-      className={`inline-flex items-center rounded border-2 bg-white ${styleOfBorderColor} px-[8px] py-[4px]`}
+      className={`z-10 inline-flex items-center rounded border-2 bg-white ${styleOfBorderColor} px-[8px] py-[4px]`}
     >
       {type === "success" && successIcon}
       {type === "pending" && pendingIcon}
