@@ -1,6 +1,6 @@
-import { type ReactNode } from "react";
-import { type Metadata } from "next";
 import "./globals.css";
+import { type ReactNode } from "react";
+import { NextPage, type Metadata } from "next";
 import Header from "@/components/layouts/Header";
 
 export const metadata: Metadata = {
@@ -8,7 +8,9 @@ export const metadata: Metadata = {
   description: "",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+type Props = { children: ReactNode };
+
+const RootLayout: NextPage<Props> = ({ children }) => {
   return (
     <html lang="ja">
       <body>
@@ -17,4 +19,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
