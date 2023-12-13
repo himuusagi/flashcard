@@ -2,23 +2,36 @@ import { type NextPage, type Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getUserId } from "@/utils/get-user-id";
+import AddQAndAForm from "@/components/layouts/AddQAndAForm";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
-import EditQAndAForm from "@/components/layouts/EditQAndAForm";
 import Heading1 from "@/components/elements/Heading1";
 import Heading2 from "@/components/elements/Heading2";
 import Inner from "@/components/layouts/Inner";
-import Main from "@/components/layouts/Main";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 
-export const metadata: Metadata = {
-  title: "問題の編集",
+type MetadataProps = { params: { flashcardId: string } };
+
+export const generateMetadata = async ({
+  params: { flashcardId },
+}: MetadataProps): Promise<Metadata> => {
+  const userId = await getUserId();
+  if (!userId) {
+    redirect("/signin");
+  }
+  const flashcard = await prisma.flash_Card.findUnique({
+    where: { userId, id: Number(flashcardId) },
+  });
+  if (!flashcard) {
+    notFound();
+  }
+  return { title: `${flashcard.title} - 問題の追加 | flashcard` };
 };
 
 type Props = {
-  params: { flashcardId: string; qaId: string };
+  params: { flashcardId: string };
 };
 
-const Page: NextPage<Props> = async ({ params: { flashcardId, qaId } }) => {
+const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
   const userId = await getUserId();
   if (!userId) {
     redirect("/signin");
@@ -27,29 +40,24 @@ const Page: NextPage<Props> = async ({ params: { flashcardId, qaId } }) => {
   const flashcard = await prisma.flash_Card.findUnique({
     where: { userId, id: Number(flashcardId) },
   });
-  const qa = await prisma.question_Answer.findUnique({ where: { id: Number(qaId) } });
-  if (!flashcard || !qa) {
+
+  if (!flashcard) {
     notFound();
   }
 
   return (
-    <Main>
+    <div>
       <Heading1 title={flashcard.title} />
-      <Heading2 text="問題の編集" />
+      <Heading2 text="問題の追加" />
 
       <Inner width="narrow">
         <ContentWrapper>
           <SubmissionMessageProvider>
-            <EditQAndAForm
-              flashcardId={flashcard.id}
-              qaId={qa.id}
-              question={qa.question}
-              answer={qa.answer}
-            />
+            <AddQAndAForm flashcardId={flashcard.id} />
           </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
-    </Main>
+    </div>
   );
 };
 

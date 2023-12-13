@@ -1,12 +1,12 @@
 import BoxWithTitle from "@/components/layouts/BoxWithTitle";
-import Inner from "@/components/layouts/Inner";
-import Main from "@/components/layouts/Main";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
+import Inner from "@/components/layouts/Inner";
 import LinkedText from "@/components/elements/LinkedText";
+import Main from "@/components/layouts/Main";
 
 const NotFound = () => {
   return (
-    <Main>
+    <Main hasHeader={false}>
       <Inner width="narrow">
         <ContentWrapper>
           <BoxWithTitle
