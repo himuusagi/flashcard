@@ -1,6 +1,6 @@
 import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import { useEffect, type FC, type MouseEventHandler } from "react";
-import { experimental_useFormStatus as useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 
 type Props = {
   text: string;

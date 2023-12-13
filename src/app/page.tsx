@@ -1,4 +1,5 @@
 import { type NextPage } from "next";
+import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getUserId } from "@/utils/get-user-id";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
@@ -11,7 +12,7 @@ import Main from "@/components/layouts/Main";
 const Page: NextPage = async () => {
   const userId = await getUserId();
   if (!userId) {
-    throw new Error("認証が必要なため、リクエストが拒否されました");
+    redirect("/signin");
   }
 
   const flashcards = await prisma.flash_Card.findMany({
