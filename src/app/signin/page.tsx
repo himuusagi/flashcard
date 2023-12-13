@@ -12,7 +12,7 @@ const Page: NextPage = async () => {
   }
 
   return (
-    <Main>
+    <Main hasHeader={false}>
       <Heading1 title="サインイン" />
 
       <div className="mt-[40px] py-[40px] text-center">
