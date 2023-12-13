@@ -1,5 +1,5 @@
 import { type NextPage, Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getUserId } from "@/utils/get-user-id";
 import TetsQAndAProvider from "@/contexts/TestQAndAContext";
@@ -19,7 +19,7 @@ type Props = {
 const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
   const userId = await getUserId();
   if (!userId) {
-    throw new Error("認証が必要なため、リクエストが拒否されました");
+    redirect("/signin");
   }
 
   const flashcard = await prisma.flash_Card.findUnique({

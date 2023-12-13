@@ -1,5 +1,3 @@
-// 'use client'
-
 import { type FC } from "react";
 
 type Props = {
@@ -8,7 +6,7 @@ type Props = {
   className?: string;
 };
 
-const Arrow: FC<Props> = ({ direction, color, className }) => {
+const Arrow: FC<Props> = ({ direction, color, className = "" }) => {
   let styleOfColor: string;
   switch (color) {
     case "primary": {
