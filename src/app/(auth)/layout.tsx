@@ -10,7 +10,7 @@ type Props = { children: ReactNode };
 
 const RootLayout: NextPage<Props> = ({ children }) => {
   return (
-    <html>
+    <html lang="ja">
       <body>
         <Main hasHeader={false}>{children}</Main>
       </body>

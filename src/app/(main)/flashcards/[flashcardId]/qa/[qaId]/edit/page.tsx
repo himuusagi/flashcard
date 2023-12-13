@@ -7,11 +7,10 @@ import EditQAndAForm from "@/components/layouts/EditQAndAForm";
 import Heading1 from "@/components/elements/Heading1";
 import Heading2 from "@/components/elements/Heading2";
 import Inner from "@/components/layouts/Inner";
-import Main from "@/components/layouts/Main";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 
 export const metadata: Metadata = {
-  title: "問題の編集",
+  title: "問題の編集 | flashcard",
 };
 
 type Props = {
@@ -33,7 +32,7 @@ const Page: NextPage<Props> = async ({ params: { flashcardId, qaId } }) => {
   }
 
   return (
-    <Main>
+    <div>
       <Heading1 title={flashcard.title} />
       <Heading2 text="問題の編集" />
 
@@ -49,7 +48,7 @@ const Page: NextPage<Props> = async ({ params: { flashcardId, qaId } }) => {
           </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
-    </Main>
+    </div>
   );
 };
 

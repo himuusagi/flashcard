@@ -7,10 +7,9 @@ import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EditFlashcardForm from "@/components/layouts/EditFlashcardForm";
 import Heading1 from "@/components/elements/Heading1";
 import Inner from "@/components/layouts/Inner";
-import Main from "@/components/layouts/Main";
 
 export const metadata: Metadata = {
-  title: "単語帳の編集",
+  title: "単語帳の編集 | flashcard",
 };
 
 const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { flashcardId } }) => {
@@ -28,7 +27,7 @@ const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { f
   }
 
   return (
-    <Main>
+    <div>
       <Heading1 title="単語帳の編集" />
 
       <Inner width="narrow">
@@ -38,7 +37,7 @@ const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { f
           </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
-    </Main>
+    </div>
   );
 };
 

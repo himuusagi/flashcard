@@ -1,9 +1,12 @@
-import { type NextPage } from "next";
+import { type NextPage, type Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getUserId } from "@/utils/get-user-id";
 import SigninButton from "@/components/elements/SigninButton";
 import Heading1 from "@/components/elements/Heading1";
-import Main from "@/components/layouts/Main";
+
+export const metadata: Metadata = {
+  title: "サインイン | flashcard",
+};
 
 const Page: NextPage = async () => {
   const userId = await getUserId();
@@ -12,13 +15,13 @@ const Page: NextPage = async () => {
   }
 
   return (
-    <Main hasHeader={false}>
+    <div>
       <Heading1 title="サインイン" />
 
       <div className="mt-[40px] py-[40px] text-center">
         <SigninButton />
       </div>
-    </Main>
+    </div>
   );
 };
 

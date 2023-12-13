@@ -7,7 +7,6 @@ import ContentWrapper from "@/components/layouts/ContentWrapper";
 import FlashcardList from "@/components/layouts/FlashcardList";
 import Heading1 from "@/components/elements/Heading1";
 import Inner from "@/components/layouts/Inner";
-import Main from "@/components/layouts/Main";
 
 const Page: NextPage = async () => {
   const userId = await getUserId();
@@ -21,7 +20,7 @@ const Page: NextPage = async () => {
   });
 
   return (
-    <Main>
+    <div>
       <Heading1 title="単語帳リスト" />
 
       <Inner width="wide">
@@ -31,7 +30,7 @@ const Page: NextPage = async () => {
           </SubmissionMessageProvider>
         </ContentWrapper>
       </Inner>
-    </Main>
+    </div>
   );
 };
 

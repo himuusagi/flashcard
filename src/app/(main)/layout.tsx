@@ -11,7 +11,7 @@ type Props = { children: ReactNode };
 
 const RootLayout: NextPage<Props> = ({ children }) => {
   return (
-    <html>
+    <html lang="ja">
       <body>
         <Header />
         <Main hasHeader={true}>{children}</Main>
