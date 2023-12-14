@@ -24,7 +24,7 @@ export const generateMetadata = async ({
   if (!flashcard) {
     notFound();
   }
-  return { title: `${flashcard.title} - 問題の編集 | flashcard` };
+  return { title: `${flashcard.title} - 問題の一覧 | flashcard` };
 };
 
 type Props = {
