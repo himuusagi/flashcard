@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import { getUserId } from "@/utils/get-user-id";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
+import EmptyFlashcardPanel from "@/components/layouts/EmptyFlashcardPanel";
 import FlashcardList from "@/components/layouts/FlashcardList";
 import Heading1 from "@/components/elements/Heading1";
 import Inner from "@/components/layouts/Inner";
@@ -25,9 +26,13 @@ const Page: NextPage = async () => {
 
       <Inner width="wide">
         <ContentWrapper>
-          <SubmissionMessageProvider>
-            <FlashcardList flashcards={flashcards} />
-          </SubmissionMessageProvider>
+          {flashcards.length > 0 ? (
+            <SubmissionMessageProvider>
+              <FlashcardList flashcards={flashcards} />
+            </SubmissionMessageProvider>
+          ) : (
+            <EmptyFlashcardPanel />
+          )}
         </ContentWrapper>
       </Inner>
     </div>
