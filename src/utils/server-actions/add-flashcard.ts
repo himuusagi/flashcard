@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { getUserId } from "../get-user-id";
 import { titleValidation } from "../validation/title-validation";
@@ -22,6 +23,7 @@ export const addFlashcard = async (formData: {
 
     const count = await prisma.flash_Card.count({ where: { userId } });
     await prisma.flash_Card.create({ data: { order: count + 1, userId, title } });
+    revalidatePath("/");
     return { success: true, message: "データが正常に追加されました" };
   } catch (error) {
     if (error instanceof Error) {

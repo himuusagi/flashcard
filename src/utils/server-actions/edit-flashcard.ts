@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { getUserId } from "../get-user-id";
 import { titleValidation } from "../validation/title-validation";
@@ -27,6 +28,7 @@ export const editFlashcard = async (formData: {
     }
 
     await prisma.flash_Card.update({ where: { id }, data: { title } });
+    revalidatePath("/");
     return { success: true, message: "データが正常に更新されました" };
   } catch (error) {
     if (error instanceof Error) {
