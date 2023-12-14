@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { getUserId } from "../get-user-id";
 import { answerValidation } from "../validation/answer-validation";
@@ -35,6 +36,7 @@ export const editQA = async (formData: {
       where: { id: qaId },
       data: { question, answer },
     });
+    revalidatePath(`/flashcards/${flashcardId}/qa`);
     return { success: true, message: "データが正常に更新されました" };
   } catch (error) {
     if (error instanceof Error) {

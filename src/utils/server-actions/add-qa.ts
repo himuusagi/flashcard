@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { getUserId } from "../get-user-id";
 import { answerValidation } from "../validation/answer-validation";
@@ -33,6 +34,7 @@ export const addQA = async (formData: {
     await prisma.question_Answer.create({
       data: { order: count + 1, flashCardId: flashcardId, question, answer },
     });
+    revalidatePath(`/flashcards/${flashcardId}/qa`);
     return { success: true, message: "データが正常に追加されました" };
   } catch (error) {
     if (error instanceof Error) {
