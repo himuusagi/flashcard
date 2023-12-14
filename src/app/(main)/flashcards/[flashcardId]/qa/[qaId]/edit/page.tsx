@@ -9,8 +9,22 @@ import Heading2 from "@/components/elements/Heading2";
 import Inner from "@/components/layouts/Inner";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 
-export const metadata: Metadata = {
-  title: "問題の編集 | flashcard",
+type MetadataProps = { params: { flashcardId: string } };
+
+export const generateMetadata = async ({
+  params: { flashcardId },
+}: MetadataProps): Promise<Metadata> => {
+  const userId = await getUserId();
+  if (!userId) {
+    redirect("/signin");
+  }
+  const flashcard = await prisma.flash_Card.findUnique({
+    where: { userId, id: Number(flashcardId) },
+  });
+  if (!flashcard) {
+    notFound();
+  }
+  return { title: `${flashcard.title} - 問題の編集 | flashcard` };
 };
 
 type Props = {
