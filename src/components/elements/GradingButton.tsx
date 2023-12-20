@@ -12,14 +12,20 @@ type Props = {
 const GradingButton: FC<Props> = ({ text, onClick, className, correction }) => {
   let styleOfColor = "";
   switch (correction) {
-    case "correct":
-      styleOfColor = "border-primary hover:bg-primary text-primary hover:text-white";
+    case "correct": {
+      styleOfColor =
+        "border-primary hover:bg-primary text-primary focus:shadow-primary hover:[&_line]:stroke-primary";
       break;
-    case "incorrect":
-      styleOfColor = "border-gray hover:bg-gray text-gray hover:text-white";
+    }
+    case "incorrect": {
+      styleOfColor =
+        "border-gray hover:bg-gray text-gray focus:shadow-gray hover:[&_line]:stroke-gray";
       break;
-    default:
-      styleOfColor = "border-primary hover:bg-primary text-primary hover:text-white";
+    }
+    default: {
+      const wrongCorrection: never = correction;
+      throw new Error(`${wrongCorrection as string} is wrong type`);
+    }
   }
 
   const correctIcon = (
@@ -52,7 +58,7 @@ const GradingButton: FC<Props> = ({ text, onClick, className, correction }) => {
     <button
       type="submit"
       onClick={onClick}
-      className={`group inline-flex min-w-[200px] items-center justify-center rounded-[4px] border  px-[40px] py-[4px] text-center text-xl outline-none duration-100 focus:shadow focus:shadow-primary hover:[&_line]:stroke-primary ${styleOfColor} ${className}`}
+      className={`group inline-flex min-w-[200px] items-center justify-center rounded-[4px] border px-[40px] py-[4px] text-center text-xl outline-none duration-100 hover:text-white focus:shadow ${styleOfColor} ${className}`}
     >
       {correction === "correct" ? correctIcon : incorrectIcon}
       <span className="ml-[8px]">{text}</span>
