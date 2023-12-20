@@ -2,6 +2,7 @@ import { type ReactNode } from "react";
 import { type NextPage, type Metadata } from "next";
 import Header from "@/components/layouts/Header";
 import Main from "@/components/layouts/Main";
+import Inner from "@/components/layouts/Inner";
 
 export const metadata: Metadata = {
   title: "flashcard",
@@ -14,7 +15,10 @@ const RootLayout: NextPage<Props> = ({ children }) => {
     <html lang="ja">
       <body>
         <Header />
-        <Main hasHeader={true}>{children}</Main>
+
+        <Inner width="narrow">
+          <Main hasHeader={true}>{children}</Main>
+        </Inner>
       </body>
     </html>
   );

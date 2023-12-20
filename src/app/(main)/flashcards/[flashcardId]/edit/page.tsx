@@ -6,7 +6,6 @@ import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EditFlashcardForm from "@/components/layouts/EditFlashcardForm";
 import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
 
 export const metadata: Metadata = {
   title: "単語帳の編集 | flashcard",
@@ -30,13 +29,11 @@ const Page: NextPage<{ params: { flashcardId: string } }> = async ({ params: { f
     <div>
       <Heading1 title="単語帳の編集" />
 
-      <Inner width="narrow">
-        <ContentWrapper>
-          <SubmissionMessageProvider>
-            <EditFlashcardForm flashcardId={Number(flashcardId)} flashcardTitle={flashcard.title} />
-          </SubmissionMessageProvider>
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        <SubmissionMessageProvider>
+          <EditFlashcardForm flashcardId={Number(flashcardId)} flashcardTitle={flashcard.title} />
+        </SubmissionMessageProvider>
+      </ContentWrapper>
     </div>
   );
 };

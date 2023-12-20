@@ -6,7 +6,6 @@ import TetsQAndAProvider from "@/contexts/TestQAndAContext";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EmptyQAndAPanel from "@/components/layouts/EmptyQAndAPanel";
 import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
 import TestQAndAContent from "@/components/layouts/TestQAndAContent";
 
 type MetadataProps = { params: { flashcardId: string } };
@@ -53,17 +52,15 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
     <div>
       <Heading1 title={flashcard.title} />
 
-      <Inner width="narrow">
-        <ContentWrapper>
-          {qas.length > 0 ? (
-            <TetsQAndAProvider>
-              <TestQAndAContent qas={qas} />
-            </TetsQAndAProvider>
-          ) : (
-            <EmptyQAndAPanel flashcardId={Number(flashcardId)} />
-          )}
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        {qas.length > 0 ? (
+          <TetsQAndAProvider>
+            <TestQAndAContent qas={qas} />
+          </TetsQAndAProvider>
+        ) : (
+          <EmptyQAndAPanel flashcardId={Number(flashcardId)} />
+        )}
+      </ContentWrapper>
     </div>
   );
 };

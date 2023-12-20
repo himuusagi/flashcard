@@ -6,7 +6,6 @@ import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EmptyQAndAPanel from "@/components/layouts/EmptyQAndAPanel";
 import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
 import QAndACardList from "@/components/layouts/QAndACardList";
 
 type MetadataProps = { params: { flashcardId: string } };
@@ -54,17 +53,15 @@ const Page: NextPage<Props> = async ({ params: { flashcardId } }) => {
     <div>
       <Heading1 title={flashcard.title} />
 
-      <Inner width="narrow">
-        <ContentWrapper>
-          {qas.length > 0 ? (
-            <SubmissionMessageProvider>
-              <QAndACardList flashcardId={flashcard.id} qas={qas} />
-            </SubmissionMessageProvider>
-          ) : (
-            <EmptyQAndAPanel flashcardId={flashcard.id} />
-          )}
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        {qas.length > 0 ? (
+          <SubmissionMessageProvider>
+            <QAndACardList flashcardId={flashcard.id} qas={qas} />
+          </SubmissionMessageProvider>
+        ) : (
+          <EmptyQAndAPanel flashcardId={flashcard.id} />
+        )}
+      </ContentWrapper>
     </div>
   );
 };

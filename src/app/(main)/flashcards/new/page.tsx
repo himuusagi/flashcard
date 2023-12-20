@@ -5,7 +5,6 @@ import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 import AddFlashcardForm from "@/components/layouts/AddFlashcardForm";
 import ContentWrapper from "@/components/layouts/ContentWrapper";
 import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
 
 export const metadata: Metadata = {
   title: "単語帳の追加",
@@ -21,13 +20,11 @@ const Page: NextPage = async () => {
     <div>
       <Heading1 title="単語帳の追加" />
 
-      <Inner width="narrow">
-        <ContentWrapper>
-          <SubmissionMessageProvider>
-            <AddFlashcardForm />
-          </SubmissionMessageProvider>
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        <SubmissionMessageProvider>
+          <AddFlashcardForm />
+        </SubmissionMessageProvider>
+      </ContentWrapper>
     </div>
   );
 };

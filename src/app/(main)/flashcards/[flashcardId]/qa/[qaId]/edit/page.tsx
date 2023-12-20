@@ -6,7 +6,6 @@ import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EditQAndAForm from "@/components/layouts/EditQAndAForm";
 import Heading1 from "@/components/elements/Heading1";
 import Heading2 from "@/components/elements/Heading2";
-import Inner from "@/components/layouts/Inner";
 import SubmissionMessageProvider from "@/contexts/SubmissionMessageContext";
 
 type MetadataProps = { params: { flashcardId: string } };
@@ -50,18 +49,16 @@ const Page: NextPage<Props> = async ({ params: { flashcardId, qaId } }) => {
       <Heading1 title={flashcard.title} />
       <Heading2 text="問題の編集" />
 
-      <Inner width="narrow">
-        <ContentWrapper>
-          <SubmissionMessageProvider>
-            <EditQAndAForm
-              flashcardId={flashcard.id}
-              qaId={qa.id}
-              question={qa.question}
-              answer={qa.answer}
-            />
-          </SubmissionMessageProvider>
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        <SubmissionMessageProvider>
+          <EditQAndAForm
+            flashcardId={flashcard.id}
+            qaId={qa.id}
+            question={qa.question}
+            answer={qa.answer}
+          />
+        </SubmissionMessageProvider>
+      </ContentWrapper>
     </div>
   );
 };

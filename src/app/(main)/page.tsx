@@ -7,7 +7,6 @@ import ContentWrapper from "@/components/layouts/ContentWrapper";
 import EmptyFlashcardPanel from "@/components/layouts/EmptyFlashcardPanel";
 import FlashcardList from "@/components/layouts/FlashcardList";
 import Heading1 from "@/components/elements/Heading1";
-import Inner from "@/components/layouts/Inner";
 
 const Page: NextPage = async () => {
   const userId = await getUserId();
@@ -24,17 +23,15 @@ const Page: NextPage = async () => {
     <div>
       <Heading1 title="単語帳リスト" />
 
-      <Inner width="wide">
-        <ContentWrapper>
-          {flashcards.length > 0 ? (
-            <SubmissionMessageProvider>
-              <FlashcardList flashcards={flashcards} />
-            </SubmissionMessageProvider>
-          ) : (
-            <EmptyFlashcardPanel />
-          )}
-        </ContentWrapper>
-      </Inner>
+      <ContentWrapper>
+        {flashcards.length > 0 ? (
+          <SubmissionMessageProvider>
+            <FlashcardList flashcards={flashcards} />
+          </SubmissionMessageProvider>
+        ) : (
+          <EmptyFlashcardPanel />
+        )}
+      </ContentWrapper>
     </div>
   );
 };
