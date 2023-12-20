@@ -7,7 +7,7 @@ type Props = {
 
 const Main: FC<Props> = ({ hasHeader, children }) => {
   return (
-    <main className={`pb-[80px] pt-[40px] ${hasHeader ? "relative top-[52px]" : ""}`}>
+    <main className={`w-full pb-[80px] pt-[40px] ${hasHeader ? "relative top-[52px]" : ""}`}>
       {children}
     </main>
   );

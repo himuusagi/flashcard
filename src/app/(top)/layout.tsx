@@ -16,7 +16,7 @@ const RootLayout: NextPage<Props> = ({ children }) => {
       <body>
         <Header />
 
-        <Inner width="narrow">
+        <Inner width="wide">
           <Main hasHeader={true}>{children}</Main>
         </Inner>
       </body>
