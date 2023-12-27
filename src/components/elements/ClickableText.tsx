@@ -1,5 +1,6 @@
 import { useSubmissionMessageContext } from "@/contexts/SubmissionMessageContext";
 import { useEffect, type FC, type MouseEventHandler } from "react";
+// @ts-expect-error useFormStatusの不要なエラー
 import { useFormStatus } from "react-dom";
 
 type Props = {
@@ -12,6 +13,7 @@ type Props = {
 const ClickableText: FC<Props> = ({ text, onClick, formAction, className }) => {
   const { setIsShowing, type, setType, setMessage } = useSubmissionMessageContext();
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   const { pending } = useFormStatus();
 
   useEffect(() => {
