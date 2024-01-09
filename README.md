@@ -1,8 +1,9 @@
 # flashcard
-[flashcard](https://mizuki-nakamura-flashcard.vercel.app/)
+[https://mizuki-nakamura-flashcard.vercel.app/](https://f-flashcard-app.vercel.app/)
 
 ## 概要
 学習をサポートするためのシンプルで効果的なツールの開発を目指しました。
+
 必要最低限の機能に絞ったシンプルなデザインの単語帳アプリです。
 
 ## 使用技術
