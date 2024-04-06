@@ -1,5 +1,5 @@
 # flashcard
-[https://mizuki-nakamura-flashcard.vercel.app/](https://f-flashcard-app.vercel.app/)
+https://f-flashcard-app.vercel.app/
 
 ## 概要
 学習をサポートするためのシンプルで効果的なツールの開発を目指しました。
